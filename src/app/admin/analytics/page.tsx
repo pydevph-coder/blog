@@ -1,18 +1,19 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 
+type PrismaWithAnalytics = typeof prisma & {
+  pageView?: typeof prisma.pageView;
+  userAction?: typeof prisma.userAction;
+};
+
 async function getAnalytics() {
   const now = new Date();
   const last7Days = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
 
-  // In case Prisma Client has not been regenerated yet and analytics models
-  // are missing, fall back gracefully so the page still loads.
-  const pageViewClient = (prisma as any).pageView as
-    | typeof prisma.pageView
-    | undefined;
-  const userActionClient = (prisma as any).userAction as
-    | typeof prisma.userAction
-    | undefined;
+  const prismaAny = prisma as unknown as PrismaWithAnalytics;
+
+  const pageViewClient = prismaAny.pageView;
+  const userActionClient = prismaAny.userAction;
 
   const [
     pageViews,
@@ -59,7 +60,6 @@ async function getAnalytics() {
       : Promise.resolve([]),
   ]);
 
-  // Group daily views
   const dailyViewsMap = new Map<string, number>();
   dailyViews.forEach((view) => {
     const date = new Date(view.createdAt).toLocaleDateString();
@@ -83,7 +83,6 @@ async function getAnalytics() {
 
 export default async function AnalyticsPage() {
   const analytics = await getAnalytics();
-
   const maxViews = Math.max(...analytics.dailyViewsData.map((d) => d.count), 1);
 
   return (
