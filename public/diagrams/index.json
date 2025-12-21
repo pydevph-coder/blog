@@ -1,0 +1,29 @@
+{
+  "groups": [
+    {
+      "name": "uml",
+      "title": "UML Diagrams",
+      "items": [
+        { "file": "uml/sample-sequence.mmd", "title": "Sample Sequence" },
+        { "file": "uml/sample-class.svg", "title": "Sample Class (SVG)" }
+      ]
+    },
+    {
+      "name": "database",
+      "title": "Database Workflows",
+      "items": [
+        { "file": "database/schema.mmd", "title": "DB Schema" }
+      ]
+    },
+    {
+      "name": "dataflow",
+      "title": "Dataflow Diagrams",
+      "items": [
+        { "file": "dataflow/pipeline.mmd", "title": "ETL Pipeline" }
+      ]
+    }
+  ]
+}
+
+
+

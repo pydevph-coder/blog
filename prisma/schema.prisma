@@ -1,0 +1,138 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Core content models for the blog with SEO-focused fields
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  posts Post[]
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  posts PostTag[]
+}
+
+model Post {
+  id              String     @id @default(cuid())
+  title           String
+  slug            String     @unique
+  excerpt         String?
+  contentMarkdown String     @db.Text
+  contentHtml     String?    @db.Text
+  status          PostStatus @default(DRAFT)
+  publishedAt     DateTime?
+  canonicalUrl    String?
+  metaTitle       String?
+  metaDescription String?
+  ogImageUrl      String?
+  readingTimeMin  Int?
+  views           Int        @default(0)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  // Relations
+  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId String?
+
+  tags PostTag[]
+}
+
+model PostTag {
+  post   Post @relation(fields: [postId], references: [id])
+  postId String
+
+  tag   Tag @relation(fields: [tagId], references: [id])
+  tagId String
+
+  @@id([postId, tagId])
+}
+
+// Store contact form submissions
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String?
+  message   String   @db.Text
+  createdAt DateTime @default(now())
+  read      Boolean  @default(false)
+}
+
+// Website interaction tracking
+model PageView {
+  id        String   @id @default(cuid())
+  path      String
+  referrer  String?
+  userAgent String?
+  ipAddress String?
+  country   String?
+  city      String?
+  device    String?
+  browser   String?
+  os        String?
+  createdAt DateTime @default(now())
+
+  @@index([path])
+  @@index([createdAt])
+}
+
+model UserAction {
+  id        String        @id @default(cuid())
+  action    String        // 'view', 'click', 'search', 'download', etc.
+  target    String?       // post slug, button id, etc.
+  metadata  String?       @db.Text // JSON string for additional data
+  path      String?
+  userAgent String?
+  ipAddress String?
+  createdAt DateTime      @default(now())
+
+  @@index([action])
+  @@index([createdAt])
+  @@index([target])
+}
+
+// Admin audit log
+model AuditLog {
+  id        String   @id @default(cuid())
+  action    String   // 'create', 'update', 'delete', 'login', 'logout'
+  entity    String   // 'post', 'category', 'tag', 'user'
+  entityId  String?
+  details   String?  @db.Text
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  @@index([action])
+  @@index([entity])
+  @@index([createdAt])
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
