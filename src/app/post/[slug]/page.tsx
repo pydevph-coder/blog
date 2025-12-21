@@ -78,7 +78,7 @@ export default async function PostPage({ params }: PageProps) {
       {isProjectOrAssignment && (
         <div className="mb-6">
           <Link
-            href={`/${post.category.slug}`}
+            href={`/${post.category!.slug}`}
             className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
           >
             <svg
