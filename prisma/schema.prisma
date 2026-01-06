@@ -62,10 +62,10 @@ model Post {
 }
 
 model PostTag {
-  post   Post @relation(fields: [postId], references: [id])
+  post   Post   @relation(fields: [postId], references: [id])
   postId String
 
-  tag   Tag @relation(fields: [tagId], references: [id])
+  tag   Tag    @relation(fields: [tagId], references: [id])
   tagId String
 
   @@id([postId, tagId])
@@ -101,14 +101,14 @@ model PageView {
 }
 
 model UserAction {
-  id        String        @id @default(cuid())
-  action    String        // 'view', 'click', 'search', 'download', etc.
-  target    String?       // post slug, button id, etc.
-  metadata  String?       @db.Text // JSON string for additional data
+  id        String   @id @default(cuid())
+  action    String // 'view', 'click', 'search', 'download', etc.
+  target    String? // post slug, button id, etc.
+  metadata  String?  @db.Text // JSON string for additional data
   path      String?
   userAgent String?
   ipAddress String?
-  createdAt DateTime      @default(now())
+  createdAt DateTime @default(now())
 
   @@index([action])
   @@index([createdAt])
@@ -118,8 +118,8 @@ model UserAction {
 // Admin audit log
 model AuditLog {
   id        String   @id @default(cuid())
-  action    String   // 'create', 'update', 'delete', 'login', 'logout'
-  entity    String   // 'post', 'category', 'tag', 'user'
+  action    String // 'create', 'update', 'delete', 'login', 'logout'
+  entity    String // 'post', 'category', 'tag', 'user'
   entityId  String?
   details   String?  @db.Text
   ipAddress String?
@@ -135,4 +135,56 @@ enum PostStatus {
   DRAFT
   PUBLISHED
   ARCHIVED
+}
+
+// Mobile app user management
+model User {
+  id             String    @id @default(cuid())
+  deviceId       String    @unique @map("device_id")
+  installedDate  DateTime  @default(now()) @map("installed_date")
+  lastLogin      DateTime? @map("last_login")
+  deviceModel    String?   @map("device_model")
+  androidVersion String?   @map("android_version")
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  reports Report[]
+
+  @@map("users")
+}
+
+// User reports/bug reports
+model Report {
+  id         String    @id @default(cuid())
+  userId     String    @map("user_id")
+  message    String    @db.Text
+  date       DateTime  @default(now())
+  solved     Boolean   @default(false)
+  dateSolved DateTime? @map("date_solved")
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([solved])
+  @@index([date])
+  @@map("reports")
+}
+
+// App version control and update notifications
+model VersionControl {
+  id            String   @id @default(cuid())
+  app           String
+  version       String
+  buildDate     DateTime @map("build_date")
+  updateMessage String?  @map("update_message") @db.Text
+  notification  String?  @db.Text // Long text message to display in user
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([app, version])
+  @@index([app])
+  @@index([buildDate])
+  @@map("version_control")
 }

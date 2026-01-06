@@ -6,7 +6,9 @@ declare global {
 }
 
 export const prisma: PrismaClient = global.cachedPrismaClient ?? new PrismaClient({
-  log: ["warn", "error"],
+  log: process.env.NODE_ENV === "development" 
+    ? ["query", "info", "warn", "error"]
+    : ["warn", "error"],
 });
 
 if (process.env.NODE_ENV !== "production") {

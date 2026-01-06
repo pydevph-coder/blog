@@ -1,0 +1,14 @@
+# Requirements for Kivy Mobile App Frontend
+
+# Kivy framework
+kivy>=2.1.0
+
+# HTTP requests
+requests>=2.31.0
+
+# For Android build tools (optional, for building APK)
+# buildozer>=1.5.0
+
+# For device information on Android (optional)
+# pyjnius>=1.4.2
+
