@@ -10,7 +10,7 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from screens.user_screen import UserScreen
 from screens.report_screen import ReportScreen
-from api_client import APIClient
+from api_client import APIClient, get_device_id, get_device_info
 import os
 
 
@@ -45,6 +45,7 @@ class MainScreen(Screen):
             text='Submit Report',
             on_press=lambda x: self.go_to('report')
         )
+        # Note: Report screen will automatically register/login user using device ID
         nav_layout.add_widget(report_btn)
         
         layout.add_widget(nav_layout)
@@ -63,6 +64,8 @@ class MobileApp(App):
         # Change this to your server URL
         self.api_base_url = os.environ.get('API_BASE_URL', 'http://localhost:3000/api')
         self.user_id = None
+        self.device_id = get_device_id()
+        self.api_client = APIClient(self.api_base_url)
     
     def build(self):
         """Build the app UI"""
@@ -80,7 +83,7 @@ class MobileApp(App):
         user_screen.add_widget(user_widget)
         sm.add_widget(user_screen)
         
-        # Report screen
+        # Report screen (will auto-register user on load)
         report_screen = Screen(name='report')
         report_widget = ReportScreen(api_base_url=self.api_base_url, user_id=self.user_id)
         self.report_widget = report_widget
@@ -88,7 +91,31 @@ class MobileApp(App):
         sm.add_widget(report_screen)
         
         self.screen_manager = sm
+        
+        # Auto-register user on app startup (optional - report screen will also do this)
+        # This pre-registers the user so it's ready when they navigate to report screen
+        self.auto_register_user_on_startup()
+        
         return sm
+    
+    def auto_register_user_on_startup(self):
+        """Automatically register/login user on app startup"""
+        try:
+            device_info = get_device_info()
+            response = self.api_client.register_user(
+                self.device_id,
+                device_info.get('device_model'),
+                device_info.get('android_version')
+            )
+            
+            if response.get('success'):
+                self.user_id = response['user']['id']
+                # Update report screen if it exists
+                if hasattr(self, 'report_widget'):
+                    self.report_widget.set_user_id(self.user_id)
+        except Exception as e:
+            # Silent fail - report screen will handle registration
+            print(f"Auto-registration on startup failed: {e}")
     
     def on_user_registered(self, user_widget):
         """Callback when user is registered"""

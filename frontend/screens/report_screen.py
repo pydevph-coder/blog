@@ -13,7 +13,7 @@ import sys
 import os
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from api_client import APIClient, APIError
+from api_client import APIClient, APIError, get_device_id, get_device_info
 
 
 class ReportScreen(BoxLayout):
@@ -24,6 +24,8 @@ class ReportScreen(BoxLayout):
         
         self.api_client = APIClient(api_base_url)
         self.user_id = user_id
+        self.device_id = get_device_id()
+        self.is_registering = False
         
         # Title
         title = Label(
@@ -35,24 +37,24 @@ class ReportScreen(BoxLayout):
         )
         self.add_widget(title)
         
-        # User ID display
-        if user_id:
-            user_label = Label(
-                text=f'User ID: {user_id}',
-                size_hint_y=None,
-                height=30,
-                halign='left',
-                color=(0.5, 0.5, 0.5, 1)
-            )
-            self.add_widget(user_label)
-        else:
-            warning_label = Label(
-                text='Warning: No user ID. Please register first.',
-                size_hint_y=None,
-                height=30,
-                color=(1, 0.5, 0, 1)
-            )
-            self.add_widget(warning_label)
+        # Device ID display (always shown)
+        device_label = Label(
+            text=f'Device ID: {self.device_id}',
+            size_hint_y=None,
+            height=30,
+            halign='left',
+            color=(0.5, 0.5, 0.5, 1)
+        )
+        self.add_widget(device_label)
+        
+        # Status label for user registration
+        self.user_status_label = Label(
+            text='Initializing...',
+            size_hint_y=None,
+            height=25,
+            color=(0, 0, 1, 1)
+        )
+        self.add_widget(self.user_status_label)
         
         # Report message input
         message_label = Label(
@@ -83,13 +85,13 @@ class ReportScreen(BoxLayout):
         )
         self.add_widget(self.status_label)
         
-        # Submit button
+        # Submit button (will be enabled after auto-registration)
         self.submit_btn = Button(
             text='Submit Report',
             size_hint_y=None,
             height=50,
             on_press=self.submit_report,
-            disabled=not user_id
+            disabled=True  # Disabled until user is registered
         )
         self.add_widget(self.submit_btn)
         
@@ -117,20 +119,69 @@ class ReportScreen(BoxLayout):
         # Spacer
         self.add_widget(Label(size_hint_y=1))
         
-        # Load reports if user_id is available
+        # Auto-register/login user on screen load
         if user_id:
+            self.user_id = user_id
+            self.submit_btn.disabled = False
+            self.user_status_label.text = 'Ready to submit reports'
+            self.user_status_label.color = (0, 1, 0, 1)
             Clock.schedule_once(lambda dt: self.load_reports(), 0.5)
+        else:
+            # Automatically register/login user using device ID
+            Clock.schedule_once(lambda dt: self.auto_register_user(), 0.5)
+    
+    def auto_register_user(self):
+        """Automatically register/login user using device ID"""
+        if self.is_registering:
+            return
+        
+        self.is_registering = True
+        self.user_status_label.text = 'Registering device...'
+        self.user_status_label.color = (0, 0, 1, 1)
+        
+        try:
+            device_info = get_device_info()
+            response = self.api_client.register_user(
+                self.device_id,
+                device_info.get('device_model'),
+                device_info.get('android_version')
+            )
+            
+            if response.get('success'):
+                self.user_id = response['user']['id']
+                self.submit_btn.disabled = False
+                self.user_status_label.text = 'Ready to submit reports'
+                self.user_status_label.color = (0, 1, 0, 1)
+                self.load_reports()
+            else:
+                self.user_status_label.text = f"Error: {response.get('error', 'Registration failed')}"
+                self.user_status_label.color = (1, 0, 0, 1)
+                
+        except APIError as e:
+            self.user_status_label.text = f"Error: {str(e)}"
+            self.user_status_label.color = (1, 0, 0, 1)
+        except Exception as e:
+            self.user_status_label.text = f"Unexpected error: {str(e)}"
+            self.user_status_label.color = (1, 0, 0, 1)
+        finally:
+            self.is_registering = False
     
     def set_user_id(self, user_id: str):
         """Set user ID and enable submission"""
         self.user_id = user_id
         self.submit_btn.disabled = False
+        self.user_status_label.text = 'Ready to submit reports'
+        self.user_status_label.color = (0, 1, 0, 1)
         self.load_reports()
     
     def submit_report(self, instance):
-        """Submit report to server"""
+        """Submit report to server - automatically registers user if needed"""
+        # If user not registered yet, register first
         if not self.user_id:
-            self.show_status("Error: No user ID. Please register first.", (1, 0, 0, 1))
+            self.show_status("Registering device...", (0, 0, 1, 1))
+            self.auto_register_user()
+            # Wait a moment for registration, then try again
+            Clock.schedule_once(lambda dt: self._retry_submit(), 1.0)
             return
         
         message = self.message_input.text.strip()
@@ -245,6 +296,12 @@ class ReportScreen(BoxLayout):
             report_box.add_widget(message_label)
             
             self.reports_container.add_widget(report_box)
+    
+    def _retry_submit(self):
+        """Retry submitting report after user registration"""
+        message = self.message_input.text.strip()
+        if message and self.user_id:
+            self._submit_report_async(message)
     
     def show_status(self, message: str, color: tuple = (0, 0, 0, 1)):
         """Show status message"""

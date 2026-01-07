@@ -140,3 +140,4 @@ export function generateDeviceId(): string {
   return `temp-${Date.now()}`;
 }
 
+

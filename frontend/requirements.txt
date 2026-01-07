@@ -12,3 +12,4 @@ requests>=2.31.0
 # For device information on Android (optional)
 # pyjnius>=1.4.2
 
+

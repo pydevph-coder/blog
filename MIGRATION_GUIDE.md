@@ -10,7 +10,10 @@ Stores mobile app user information based on device identifiers.
 **Fields:**
 - `id` (String, Primary Key) - Unique identifier (CUID)
 - `device_id` (String, Unique) - Unique device identifier
-- `installed_date` (DateTime) - When the app was first installed (defaults to now)
+- `installed_date` (DateTime) - Current installation date (updated on reinstall)
+- `first_install_date` (DateTime) - Original installation date (never changes)
+- `last_reinstall_date` (DateTime, Nullable) - Last reinstall timestamp
+- `reinstall_count` (Int) - Number of times app was reinstalled (default: 0)
 - `last_login` (DateTime, Nullable) - Last login timestamp
 - `device_model` (String, Nullable) - Device model name
 - `android_version` (String, Nullable) - Android OS version
@@ -189,4 +192,38 @@ users (1) ──< (many) reports
 - The `users` table uses `device_id` as a unique identifier (not email/username)
 - The `reports` table tracks resolution status with `solved` boolean and `date_solved` timestamp
 - The `version_control` table supports multiple apps with unique version constraints per app
+
+## Reinstall Detection
+
+The `users` table includes reinstall tracking:
+- **`first_install_date`**: Original installation date (never changes)
+- **`installed_date`**: Current installation date (updated on reinstall)
+- **`last_reinstall_date`**: When the last reinstall occurred
+- **`reinstall_count`**: Total number of reinstalls
+
+**How it works:**
+- When a user registers with an existing `device_id`, the system checks if it's a reinstall
+- A reinstall is detected if `last_login` was more than 30 days ago
+- On reinstall detection:
+  - `reinstall_count` is incremented
+  - `last_reinstall_date` is set to current date
+  - `installed_date` is updated to current date
+  - `first_install_date` remains unchanged
+
+**API Response:**
+The user registration endpoint returns an `isReinstall` flag when a reinstall is detected:
+```json
+{
+  "success": true,
+  "user": {
+    "id": "...",
+    "deviceId": "...",
+    "isReinstall": true,
+    "reinstallCount": 1,
+    "firstInstallDate": "2024-01-01T00:00:00.000Z",
+    "lastReinstallDate": "2024-02-01T00:00:00.000Z",
+    ...
+  }
+}
+```
 

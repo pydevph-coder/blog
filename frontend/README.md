@@ -158,3 +158,4 @@ buildozer android debug
 - Check Android SDK is properly configured
 - Review buildozer.spec settings
 
+

@@ -139,14 +139,17 @@ enum PostStatus {
 
 // Mobile app user management
 model User {
-  id             String    @id @default(cuid())
-  deviceId       String    @unique @map("device_id")
-  installedDate  DateTime  @default(now()) @map("installed_date")
-  lastLogin      DateTime? @map("last_login")
-  deviceModel    String?   @map("device_model")
-  androidVersion String?   @map("android_version")
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  id                String    @id @default(cuid())
+  deviceId          String    @unique @map("device_id")
+  installedDate     DateTime  @default(now()) @map("installed_date")
+  firstInstallDate  DateTime  @default(now()) @map("first_install_date") // Original installation date
+  lastReinstallDate DateTime? @map("last_reinstall_date") // Last reinstall date
+  reinstallCount    Int       @default(0) @map("reinstall_count") // Number of reinstalls
+  lastLogin         DateTime? @map("last_login")
+  deviceModel       String?   @map("device_model")
+  androidVersion    String?   @map("android_version")
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 
   reports Report[]
 

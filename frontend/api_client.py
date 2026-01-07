@@ -65,7 +65,7 @@ class APIClient:
             )
             
             # Try to parse JSON response
-            print(response.text)
+           
             try:
                 result = response.json()
             except json.JSONDecodeError:
@@ -257,4 +257,32 @@ def get_device_info() -> Dict[str, Optional[str]]:
         "device_model": device_model,
         "android_version": android_version
     }
+
+
+def ensure_user_registered(api_client: APIClient) -> Optional[str]:
+    """
+    Helper function to ensure user is registered and return user ID
+    Automatically registers/login user using device ID
+    
+    Args:
+        api_client: APIClient instance
+        
+    Returns:
+        User ID if successful, None if failed
+    """
+    try:
+        device_id = get_device_id()
+        device_info = get_device_info()
+        
+        response = api_client.register_user(
+            device_id,
+            device_info.get('device_model'),
+            device_info.get('android_version')
+        )
+        
+        if response.get('success'):
+            return response['user']['id']
+        return None
+    except Exception:
+        return None
 

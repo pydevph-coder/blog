@@ -64,3 +64,4 @@ Diagrams are in Mermaid format (`.mmd`). You can view them:
 - **Development**: `http://localhost:3000`
 - **Production**: Set via `NEXT_PUBLIC_SITE_URL` environment variable
 
+

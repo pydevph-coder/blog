@@ -20,28 +20,54 @@ export async function POST(request: NextRequest) {
       where: { deviceId },
     });
     console.log("[API] User lookup result:", user ? "Found" : "Not found");
+    
+    const currentInstallDate = new Date();
+    const isReinstall = user !== null;
 
     if (user) {
       console.log("[API] Updating existing user");
-      // Update last login and device info
+      
+      // Check if this is a reinstall
+      // If installedDate is being updated to a newer date, it's likely a reinstall
+      // Or if lastLogin was more than 30 days ago, consider it a reinstall
+      const daysSinceLastLogin = user.lastLogin 
+        ? Math.floor((currentInstallDate.getTime() - user.lastLogin.getTime()) / (1000 * 60 * 60 * 24))
+        : null;
+      
+      const isLikelyReinstall = daysSinceLastLogin !== null && daysSinceLastLogin > 30;
+      
+      // Update user data
+      const updateData: any = {
+        lastLogin: currentInstallDate,
+        deviceModel: deviceModel || user.deviceModel,
+        androidVersion: androidVersion || user.androidVersion,
+      };
+      
+      // If it's a reinstall, update reinstall tracking
+      if (isLikelyReinstall) {
+        console.log("[API] Detected reinstall - days since last login:", daysSinceLastLogin);
+        updateData.reinstallCount = user.reinstallCount + 1;
+        updateData.lastReinstallDate = currentInstallDate;
+        updateData.installedDate = currentInstallDate; // Update to current install date
+      }
+      
       user = await prisma.user.update({
         where: { deviceId },
-        data: {
-          lastLogin: new Date(),
-          deviceModel: deviceModel || user.deviceModel,
-          androidVersion: androidVersion || user.androidVersion,
-        },
+        data: updateData,
       });
-      console.log("[API] User updated successfully");
+      console.log("[API] User updated successfully", isLikelyReinstall ? "(reinstall detected)" : "");
     } else {
       console.log("[API] Creating new user");
-      // Create new user
+      // Create new user (first installation)
       user = await prisma.user.create({
         data: {
           deviceId,
           deviceModel,
           androidVersion,
-          lastLogin: new Date(),
+          lastLogin: currentInstallDate,
+          firstInstallDate: currentInstallDate,
+          installedDate: currentInstallDate,
+          reinstallCount: 0,
         },
       });
       console.log("[API] User created successfully:", user.id);
@@ -54,6 +80,10 @@ export async function POST(request: NextRequest) {
         id: user.id,
         deviceId: user.deviceId,
         installedDate: user.installedDate,
+        firstInstallDate: user.firstInstallDate,
+        lastReinstallDate: user.lastReinstallDate,
+        reinstallCount: user.reinstallCount,
+        isReinstall: isReinstall && user.reinstallCount > 0,
         lastLogin: user.lastLogin,
         deviceModel: user.deviceModel,
         androidVersion: user.androidVersion,
@@ -151,6 +181,10 @@ export async function GET(request: NextRequest) {
         id: user.id,
         deviceId: user.deviceId,
         installedDate: user.installedDate,
+        firstInstallDate: user.firstInstallDate,
+        lastReinstallDate: user.lastReinstallDate,
+        reinstallCount: user.reinstallCount,
+        isReinstall: user.reinstallCount > 0,
         lastLogin: user.lastLogin,
         deviceModel: user.deviceModel,
         androidVersion: user.androidVersion,
