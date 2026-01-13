@@ -4,10 +4,10 @@ import { prisma } from "@/lib/prisma";
 // Update report (mark as solved)
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
     const { solved } = body;
 
@@ -32,10 +32,10 @@ export async function PATCH(
 // Get single report
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
 
     const report = await prisma.report.findUnique({
       where: { id },
