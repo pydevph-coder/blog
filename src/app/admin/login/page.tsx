@@ -26,10 +26,11 @@ async function loginAction(formData: FormData) {
 export default async function AdminLoginPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const error = searchParams?.error;
-  const returnTo = (searchParams?.returnTo as string) || "/admin";
+  const params = await searchParams;
+  const error = params?.error;
+  const returnTo = (params?.returnTo as string) || "/admin";
 
   return (
     <div className="mx-auto max-w-md py-12">
