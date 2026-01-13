@@ -159,3 +159,7 @@ buildozer android debug
 - Review buildozer.spec settings
 
 
+
+
+
+

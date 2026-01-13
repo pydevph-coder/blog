@@ -65,3 +65,7 @@ CREATE INDEX "version_control_build_date_idx" ON "public"."version_control"("bui
 ALTER TABLE "public"."reports" ADD CONSTRAINT "reports_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 
+
+
+
+

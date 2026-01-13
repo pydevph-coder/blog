@@ -107,3 +107,7 @@ ls prisma/migrations/
 4. Verify the migration file exists: `prisma/migrations/20260107064414_add_mobile_app_tables/migration.sql`
 
 
+
+
+
+
