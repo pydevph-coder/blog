@@ -53,7 +53,7 @@ export async function registerUser(
       return { success: false, error: data.error || "Failed to register user" };
     }
     return { success: true, user: data.user };
-  } catch (error) {
+  } catch {
     return { success: false, error: "Network error" };
   }
 }
@@ -66,7 +66,7 @@ export async function getUser(deviceId: string): Promise<{ success: boolean; use
       return { success: false, error: data.error || "Failed to get user" };
     }
     return { success: true, user: data.user };
-  } catch (error) {
+  } catch {
     return { success: false, error: "Network error" };
   }
 }

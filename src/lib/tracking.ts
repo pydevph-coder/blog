@@ -30,7 +30,7 @@ export async function trackPageView(
 export async function trackUserAction(
   action: string,
   target?: string,
-  metadata?: Record<string, any>,
+  metadata?: Record<string, unknown>,
   request?: Request
 ) {
   try {
