@@ -1,14 +1,12 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-import { createAuditLog } from "@/lib/tracking";
-import { cookies } from "next/headers";
 
 async function getStats() {
   // In case Prisma Client has not been regenerated yet and pageView is missing,
   // fall back gracefully so the dashboard still loads.
-  const pageViewClient = (prisma as any).pageView as
-    | typeof prisma.pageView
-    | undefined;
+  const pageViewClient = (
+    "pageView" in prisma ? (prisma as typeof prisma & { pageView: typeof prisma.pageView }).pageView : undefined
+  ) as typeof prisma.pageView | undefined;
 
   const [
     totalPosts,
