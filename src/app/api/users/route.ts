@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 // Register or update user (login)
 export async function POST(request: NextRequest) {
@@ -37,7 +38,7 @@ export async function POST(request: NextRequest) {
       const isLikelyReinstall = daysSinceLastLogin !== null && daysSinceLastLogin > 30;
       
       // Update user data
-      const updateData: any = {
+      const updateData: Prisma.UserUpdateInput = {
         lastLogin: currentInstallDate,
         deviceModel: deviceModel || user.deviceModel,
         androidVersion: androidVersion || user.androidVersion,
@@ -46,7 +47,7 @@ export async function POST(request: NextRequest) {
       // If it's a reinstall, update reinstall tracking
       if (isLikelyReinstall) {
         console.log("[API] Detected reinstall - days since last login:", daysSinceLastLogin);
-        updateData.reinstallCount = user.reinstallCount + 1;
+        updateData.reinstallCount = (user.reinstallCount ?? 0) + 1;
         updateData.lastReinstallDate = currentInstallDate;
         updateData.installedDate = currentInstallDate; // Update to current install date
       }
@@ -89,62 +90,79 @@ export async function POST(request: NextRequest) {
         androidVersion: user.androidVersion,
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("[API] User registration error - Full error:", error);
-    console.error("[API] Error name:", error?.name);
-    console.error("[API] Error message:", error?.message);
-    console.error("[API] Error stack:", error?.stack);
     
-    // Check for specific Prisma errors
-    if (error?.code === "P2002") {
-      console.error("[API] Prisma unique constraint violation");
-      return NextResponse.json(
-        { error: "Device ID already exists" },
-        { status: 409 }
-      );
-    }
+    // Type guard for Error objects
+    const isError = (e: unknown): e is Error & { code?: string } => {
+      return e instanceof Error;
+    };
     
-    if (error?.code === "P2025") {
-      console.error("[API] Prisma record not found");
-      return NextResponse.json(
-        { error: "Record not found" },
-        { status: 404 }
-      );
-    }
-    
-    // Check if it's a database connection error
-    if (error?.message?.includes("Can't reach database") || error?.code === "P1001") {
-      console.error("[API] Database connection error");
+    if (isError(error)) {
+      console.error("[API] Error name:", error.name);
+      console.error("[API] Error message:", error.message);
+      console.error("[API] Error stack:", error.stack);
+      
+      // Check for specific Prisma errors
+      if (error.code === "P2002") {
+        console.error("[API] Prisma unique constraint violation");
+        return NextResponse.json(
+          { error: "Device ID already exists" },
+          { status: 409 }
+        );
+      }
+      
+      if (error.code === "P2025") {
+        console.error("[API] Prisma record not found");
+        return NextResponse.json(
+          { error: "Record not found" },
+          { status: 404 }
+        );
+      }
+      
+      // Check if it's a database connection error
+      if (error.message?.includes("Can't reach database") || error.code === "P1001") {
+        console.error("[API] Database connection error");
+        return NextResponse.json(
+          { 
+            error: "Database connection failed",
+            details: process.env.NODE_ENV === "development" ? error.message : undefined
+          },
+          { status: 503 }
+        );
+      }
+      
+      // Check if table doesn't exist
+      if (error.message?.includes("does not exist") || error.message?.includes("Unknown table")) {
+        console.error("[API] Table does not exist - migration needed");
+        return NextResponse.json(
+          { 
+            error: "Database tables not found. Please run: npx prisma migrate dev",
+            details: process.env.NODE_ENV === "development" ? error.message : undefined
+          },
+          { status: 500 }
+        );
+      }
+      
+      // Provide more detailed error information in development
+      const errorMessage = process.env.NODE_ENV === "development" 
+        ? error.message || "Failed to register user"
+        : "Failed to register user";
       return NextResponse.json(
         { 
-          error: "Database connection failed",
-          details: process.env.NODE_ENV === "development" ? error.message : undefined
-        },
-        { status: 503 }
-      );
-    }
-    
-    // Check if table doesn't exist
-    if (error?.message?.includes("does not exist") || error?.message?.includes("Unknown table")) {
-      console.error("[API] Table does not exist - migration needed");
-      return NextResponse.json(
-        { 
-          error: "Database tables not found. Please run: npx prisma migrate dev",
-          details: process.env.NODE_ENV === "development" ? error.message : undefined
-        },
+          error: errorMessage,
+          details: process.env.NODE_ENV === "development" ? String(error) : undefined,
+          code: error.code
+        }, 
         { status: 500 }
       );
     }
     
-    // Provide more detailed error information in development
-    const errorMessage = process.env.NODE_ENV === "development" 
-      ? error?.message || "Failed to register user"
-      : "Failed to register user";
+    // Fallback for non-Error objects
     return NextResponse.json(
       { 
-        error: errorMessage,
-        details: process.env.NODE_ENV === "development" ? String(error) : undefined,
-        code: error?.code
+        error: "Failed to register user",
+        details: process.env.NODE_ENV === "development" ? String(error) : undefined
       }, 
       { status: 500 }
     );
@@ -191,10 +209,10 @@ export async function GET(request: NextRequest) {
         reports: user.reports,
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Get user error:", error);
     const errorMessage = process.env.NODE_ENV === "development" 
-      ? error?.message || "Failed to get user"
+      ? (error instanceof Error ? error.message : "Failed to get user")
       : "Failed to get user";
     return NextResponse.json(
       { 

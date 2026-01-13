@@ -23,7 +23,7 @@ export default function ContactPage() {
       } else {
         setStatus("error");
       }
-    } catch (error) {
+    } catch {
       setStatus("error");
     } finally {
       setIsSubmitting(false);
@@ -44,7 +44,7 @@ export default function ContactPage() {
         </h1>
         <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
           Have a question, want to collaborate on a project, or just want to say hello? 
-          I'd love to hear from you! Fill out the form below and I'll get back to you as soon as possible.
+          I&apos;d love to hear from you! Fill out the form below and I&apos;ll get back to you as soon as possible.
         </p>
       </section>
 
@@ -185,7 +185,7 @@ export default function ContactPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <p className="text-green-800 dark:text-green-300 font-medium">
-                  Message sent successfully! I'll get back to you soon.
+                  Message sent successfully! I&apos;ll get back to you soon.
                 </p>
               </div>
             )}

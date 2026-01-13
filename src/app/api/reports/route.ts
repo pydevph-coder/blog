@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 // Create a new report
 export async function POST(request: NextRequest) {
@@ -42,10 +43,10 @@ export async function POST(request: NextRequest) {
         solved: report.solved,
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Create report error:", error);
     const errorMessage = process.env.NODE_ENV === "development" 
-      ? error?.message || "Failed to create report"
+      ? (error instanceof Error ? error.message : "Failed to create report")
       : "Failed to create report";
     return NextResponse.json(
       { 
@@ -66,7 +67,7 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get("limit") || "50");
     const offset = parseInt(searchParams.get("offset") || "0");
 
-    const where: any = {};
+    const where: Prisma.ReportWhereInput = {};
     if (userId) {
       where.userId = userId;
     }
@@ -101,10 +102,10 @@ export async function GET(request: NextRequest) {
       limit,
       offset,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Get reports error:", error);
     const errorMessage = process.env.NODE_ENV === "development" 
-      ? error?.message || "Failed to get reports"
+      ? (error instanceof Error ? error.message : "Failed to get reports")
       : "Failed to get reports";
     return NextResponse.json(
       { 

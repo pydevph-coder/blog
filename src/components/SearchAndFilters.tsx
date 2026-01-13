@@ -311,7 +311,7 @@ export default function SearchAndFilters({ posts, allTags, type }: SearchAndFilt
             </div>
             <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">No results found</h3>
             <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
-              Try adjusting your search query or filters to find what you're looking for.
+              Try adjusting your search query or filters to find what you&apos;re looking for.
             </p>
             {hasActiveFilters && (
               <button

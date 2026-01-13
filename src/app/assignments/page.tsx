@@ -136,7 +136,7 @@ export default async function AssignmentsPage() {
           </div>
           <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">No assignments yet</h3>
           <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
-            Assignments will appear here once they're published. Check back soon for detailed academic 
+            Assignments will appear here once they&apos;re published. Check back soon for detailed academic 
             and professional work!
           </p>
         </section>

@@ -93,7 +93,7 @@ export async function createReport(
       return { success: false, error: data.error || "Failed to create report" };
     }
     return { success: true, report: data.report };
-  } catch (error) {
+  } catch {
     return { success: false, error: "Network error" };
   }
 }
@@ -106,7 +106,7 @@ export async function getUserReports(userId: string): Promise<{ success: boolean
       return { success: false, error: data.error || "Failed to get reports" };
     }
     return { success: true, reports: data.reports };
-  } catch (error) {
+  } catch {
     return { success: false, error: "Network error" };
   }
 }
@@ -120,7 +120,7 @@ export async function getLatestVersion(app: string): Promise<{ success: boolean;
       return { success: false, error: data.error || "Failed to get version" };
     }
     return { success: true, version: data.version };
-  } catch (error) {
+  } catch {
     return { success: false, error: "Network error" };
   }
 }

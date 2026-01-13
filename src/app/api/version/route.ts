@@ -74,14 +74,17 @@ export async function POST(request: NextRequest) {
       success: true,
       version: newVersion,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Create version error:", error);
-    if (error.code === "P2002") {
+    
+    // Type guard for Prisma errors
+    if (error && typeof error === "object" && "code" in error && error.code === "P2002") {
       return NextResponse.json(
         { error: "Version already exists for this app" },
         { status: 409 }
       );
     }
+    
     return NextResponse.json({ error: "Failed to create version" }, { status: 500 });
   }
 }

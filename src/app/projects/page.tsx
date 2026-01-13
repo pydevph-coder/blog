@@ -151,7 +151,7 @@ export default async function ProjectsPage() {
           </div>
           <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">No projects yet</h3>
           <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
-            Projects will appear here once they're published. Check back soon for exciting new developments 
+            Projects will appear here once they&apos;re published. Check back soon for exciting new developments 
             and innovative solutions!
           </p>
         </section>
@@ -162,7 +162,7 @@ export default async function ProjectsPage() {
         <h2 className="text-2xl font-bold text-white">Want to Collaborate?</h2>
         <p className="text-blue-100 max-w-2xl mx-auto">
           Have a project idea or want to work together on something exciting? 
-          I'm always open to discussing new opportunities and collaborations!
+          I&apos;m always open to discussing new opportunities and collaborations!
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link 

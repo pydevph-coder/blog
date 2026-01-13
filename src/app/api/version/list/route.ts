@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 // Get all versions for an app (or all apps)
 export async function GET(request: NextRequest) {
@@ -8,7 +9,7 @@ export async function GET(request: NextRequest) {
     const app = searchParams.get("app");
     const limit = parseInt(searchParams.get("limit") || "50");
 
-    const where: any = {};
+    const where: Prisma.VersionControlWhereInput = {};
     if (app) {
       where.app = app;
     }
