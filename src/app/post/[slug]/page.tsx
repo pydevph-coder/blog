@@ -75,7 +75,7 @@ export default async function PostPage({ params }: PageProps) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* Back Button - Show for projects and assignments */}
-      {isProjectOrAssignment && (
+      {isProjectOrAssignment && post.category && (
         <div className="mb-6">
           <Link
             href={`/${post.category.slug}`}
