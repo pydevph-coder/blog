@@ -102,6 +102,30 @@ async function main() {
 
   console.log("✅ Tags created/updated");
 
+  // Default ad servers
+  const defaultServers = [
+    "https://otieu.com/4/10326113",
+    "https://otieu.com/4/10327806",
+    "https://otieu.com/4/10326128",
+    "https://otieu.com/4/10327851",
+    "https://www.effectivegatecpm.com/a90jv3etre?key=e644e762868a63ddcf4939b61cd20d9b",
+    "https://www.effectivegatecpm.com/drbexi54g?key=f7f515b2ca2ab9bee1c1b469367de2a0",
+    "https://www.effectivegatecpm.com/z04nrvaw?key=39c23a972c317985c075edee44d76833",
+  ];
+
+  console.log("🌐 Creating default ad servers...");
+  for (const url of defaultServers) {
+    // Skip commented-out URLs if any are left as comments in the array
+    if (!url || url.trim().startsWith("#")) continue;
+
+    await prisma.server.upsert({
+      where: { url },
+      update: {},
+      create: { url },
+    });
+    console.log(`  ✅ Server: ${url}`);
+  }
+
   // Sample Projects
   const projects = [
     {
