@@ -98,6 +98,26 @@ async function main() {
       update: {},
       create: { name: "Full Stack", slug: "fullstack" },
     }),
+    python: await prisma.tag.upsert({
+      where: { slug: "python" },
+      update: {},
+      create: { name: "Python", slug: "python" },
+    }),
+    kivy: await prisma.tag.upsert({
+      where: { slug: "kivy" },
+      update: {},
+      create: { name: "Kivy", slug: "kivy" },
+    }),
+    android: await prisma.tag.upsert({
+      where: { slug: "android" },
+      update: {},
+      create: { name: "Android", slug: "android" },
+    }),
+    mobiledev: await prisma.tag.upsert({
+      where: { slug: "mobile-development" },
+      update: {},
+      create: { name: "Mobile Development", slug: "mobile-development" },
+    }),
   };
 
   console.log("✅ Tags created/updated");
@@ -128,6 +148,217 @@ async function main() {
 
   // Sample Projects
   const projects = [
+    {
+      title: "Kivy Studio – Expo Go for Kivy/Python Android Development",
+      slug: "kivy-studio-python-kivy-android-dev",
+      excerpt:
+        "Kivy Studio is an Expo Go–style Android environment for Python and Kivy that lets you build and test apps in real time without Android Studio or manual APK builds.",
+      contentMarkdown: `<div style="max-width: 900px; margin: 0 auto; padding: 2rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #0f172a;">
+  <style>
+    .kivy-hero { background: radial-gradient(circle at top left, #1d4ed8 0%, #0f172a 55%, #020617 100%); padding: 2.8rem 2rem; border-radius: 18px; color: #e5e7eb; margin-bottom: 2.2rem; position: relative; overflow: hidden; }
+    .kivy-hero h1 { margin: 0; font-size: 2.2rem; font-weight: 800; letter-spacing: -0.04em; }
+    .kivy-hero p { margin: 1rem 0 0; max-width: 640px; font-size: 1rem; opacity: 0.9; }
+    .kivy-pill { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.35rem 0.85rem; border-radius: 999px; background: rgba(15,23,42,0.85); border: 1px solid rgba(148,163,184,0.4); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #e5e7eb; margin-bottom: 0.9rem; }
+    .kivy-section { margin: 2.1rem 0; }
+    .kivy-section h2 { font-size: 1.4rem; margin-bottom: 0.75rem; color: #0f172a; border-bottom: 2px solid #2563eb; display: inline-block; padding-bottom: 0.25rem; }
+    .kivy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.3rem; margin-top: 1rem; }
+    .kivy-card { background: #f9fafb; border-radius: 12px; padding: 1.2rem 1.3rem; border: 1px solid #e5e7eb; box-shadow: 0 10px 25px rgba(15,23,42,0.04); }
+    .kivy-card h3 { margin: 0 0 0.45rem; font-size: 1rem; color: #111827; }
+    .kivy-tag { display: inline-block; padding: 0.28rem 0.75rem; border-radius: 999px; font-size: 0.8rem; font-weight: 600; background: #e0f2fe; color: #0369a1; margin: 0.2rem 0.25rem 0 0; }
+    .kivy-beta { background: linear-gradient(135deg, #f97316 0%, #ea580c 40%, #c2410c 100%); color: #fff7ed; border-radius: 14px; padding: 1.6rem 1.9rem; margin: 2.1rem 0; box-shadow: 0 16px 40px rgba(194,65,12,0.35); }
+    .kivy-beta h2 { margin: 0 0 0.6rem; font-size: 1.35rem; color: #fffbeb; border: none; padding: 0; }
+    .kivy-beta p { margin: 0.35rem 0; font-size: 0.95rem; }
+    .kivy-links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.3rem; }
+    .kivy-link-primary { display: inline-flex; align-items: center; justify-content: center; padding: 0.55rem 1.2rem; border-radius: 999px; background: #2563eb; color: white; font-weight: 600; font-size: 0.9rem; text-decoration: none; box-shadow: 0 10px 30px rgba(37,99,235,0.5); }
+    .kivy-link-secondary { display: inline-flex; align-items: center; justify-content: center; padding: 0.5rem 1.1rem; border-radius: 999px; border: 1px solid #9ca3af; color: #111827; font-weight: 500; font-size: 0.85rem; text-decoration: none; background: rgba(248,250,252,0.85); }
+  </style>
+
+  <div class="kivy-hero">
+    <div class="kivy-pill">
+      <span>🚀 Project</span>
+      <span>Python • Kivy • Android</span>
+    </div>
+    <h1>Kivy Studio – Expo Go for Kivy/Python Android Development</h1>
+    <p>
+      Kivy Studio gives Python developers an Expo Go–style experience for Android: write Kivy apps on
+      your desktop and see them update instantly on your phone – without touching Android Studio,
+      Gradle, or complex build pipelines.
+    </p>
+  </div>
+
+  <div class="kivy-section">
+    <h2>✨ What Makes Kivy Studio Different?</h2>
+    <p>
+      Instead of forcing you through heavy Java/Kotlin and Gradle tooling, Kivy Studio focuses entirely on
+      <strong>Python + Kivy</strong>. It&apos;s fast to set up, light on resources, and feels familiar if
+      you&apos;ve ever used Expo Go in the React Native world.
+    </p>
+    <div class="kivy-grid">
+      <div class="kivy-card">
+        <h3>⚡ Real-time Android Preview</h3>
+        <p>Save your Python files on Windows and watch Kivy Studio instantly reload the UX on your Android device.</p>
+      </div>
+      <div class="kivy-card">
+        <h3>🚫 No Android Studio Required</h3>
+        <p>Skip Gradle configs, long builds, and heavy IDEs. Everything runs through a lightweight bridge.</p>
+      </div>
+      <div class="kivy-card">
+        <h3>🎓 Made for Learning</h3>
+        <p>Preloaded sample apps, clean project structure, and instant feedback make it perfect for students and self‑taught devs.</p>
+      </div>
+      <div class="kivy-card">
+        <h3>🤖 AI, ML & Computer Vision Ready</h3>
+        <p>TensorFlow Lite, OpenCV, Camera4Kivy, NumPy and more are integrated for on-device ML experiments.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="kivy-section">
+    <h2>🧱 Tech Stack & Libraries</h2>
+    <p>
+      Kivy Studio bundles a rich Python ecosystem so you can go from simple UI demos to serious AI/ML prototypes
+      without leaving your comfort zone.
+    </p>
+    <div>
+      <span class="kivy-tag">Python 3.8+</span>
+      <span class="kivy-tag">Kivy 2.3.1</span>
+      <span class="kivy-tag">KivyMD</span>
+      <span class="kivy-tag">TensorFlow Lite</span>
+      <span class="kivy-tag">OpenCV</span>
+      <span class="kivy-tag">Camera4Kivy</span>
+      <span class="kivy-tag">NumPy</span>
+      <span class="kivy-tag">SQLAlchemy</span>
+    </div>
+  </div>
+
+  <div class="kivy-beta">
+    <h2>⚠️ Beta Release – Frequent Updates Recommended</h2>
+    <p>
+      The current Kivy Studio APK is a <strong>beta build</strong>. Features may change, some rough edges
+      are expected, and I actively ship new versions as I add capabilities and improve stability.
+    </p>
+    <p>
+      If you install this beta, plan to <strong>check back for future updates</strong> so you always have
+      the best development experience and latest bug fixes.
+    </p>
+  </div>
+
+  <div class="kivy-section">
+    <h2>🔗 Explore the Live Project & Download</h2>
+    <p>
+      Want to dive deeper into how it works, or grab the APK and try it on your device? Use the links below
+      to visit the dedicated project and download pages on this site.
+    </p>
+    <div class="kivy-links">
+      <a href="/projects/kivy-studio" class="kivy-link-primary">View Kivy Studio Project Page</a>
+      <a href="/downloads/kivy-studio" class="kivy-link-secondary">Go to Kivy Studio Download Flow</a>
+    </div>
+  </div>
+</div>`,
+      tags: [tags.python, tags.kivy, tags.android, tags.mobiledev],
+    },
+    {
+      title: "KivyStudioBridge – Windows Companion for Kivy Studio Android",
+      slug: "kivystudiobridge-windows-companion",
+      excerpt:
+        "KivyStudioBridge is the Windows desktop companion for Kivy Studio. It watches your Python/Kivy project and syncs changes in real time to the Kivy Studio Android app.",
+      contentMarkdown: `<div style="max-width: 900px; margin: 0 auto; padding: 2rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #0f172a;">
+  <style>
+    .bridge-hero { background: radial-gradient(circle at top left, #4f46e5 0%, #0f172a 55%, #020617 100%); padding: 2.8rem 2rem; border-radius: 18px; color: #e5e7eb; margin-bottom: 2.2rem; position: relative; overflow: hidden; }
+    .bridge-hero h1 { margin: 0; font-size: 2.2rem; font-weight: 800; letter-spacing: -0.04em; }
+    .bridge-hero p { margin: 1rem 0 0; max-width: 640px; font-size: 1rem; opacity: 0.9; }
+    .bridge-pill { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.35rem 0.85rem; border-radius: 999px; background: rgba(15,23,42,0.9); border: 1px solid rgba(129,140,248,0.5); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #e5e7eb; margin-bottom: 0.9rem; }
+    .bridge-section { margin: 2.1rem 0; }
+    .bridge-section h2 { font-size: 1.4rem; margin-bottom: 0.75rem; color: #0f172a; border-bottom: 2px solid #4f46e5; display: inline-block; padding-bottom: 0.25rem; }
+    .bridge-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.3rem; margin-top: 1rem; }
+    .bridge-card { background: #f9fafb; border-radius: 12px; padding: 1.2rem 1.3rem; border: 1px solid #e5e7eb; box-shadow: 0 10px 25px rgba(15,23,42,0.04); }
+    .bridge-card h3 { margin: 0 0 0.45rem; font-size: 1rem; color: #111827; }
+    .bridge-tag { display: inline-block; padding: 0.28rem 0.75rem; border-radius: 999px; font-size: 0.8rem; font-weight: 600; background: #e0e7ff; color: #3730a3; margin: 0.2rem 0.25rem 0 0; }
+    .bridge-beta { background: linear-gradient(135deg, #f97316 0%, #ea580c 40%, #c2410c 100%); color: #fff7ed; border-radius: 14px; padding: 1.6rem 1.9rem; margin: 2.1rem 0; box-shadow: 0 16px 40px rgba(194,65,12,0.35); }
+    .bridge-beta h2 { margin: 0 0 0.6rem; font-size: 1.35rem; color: #fffbeb; border: none; padding: 0; }
+    .bridge-beta p { margin: 0.35rem 0; font-size: 0.95rem; }
+    .bridge-links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.3rem; }
+    .bridge-link-primary { display: inline-flex; align-items: center; justify-content: center; padding: 0.55rem 1.2rem; border-radius: 999px; background: #4f46e5; color: white; font-weight: 600; font-size: 0.9rem; text-decoration: none; box-shadow: 0 10px 30px rgba(79,70,229,0.5); }
+    .bridge-link-secondary { display: inline-flex; align-items: center; justify-content: center; padding: 0.5rem 1.1rem; border-radius: 999px; border: 1px solid #9ca3af; color: #111827; font-weight: 500; font-size: 0.85rem; text-decoration: none; background: rgba(248,250,252,0.9); }
+  </style>
+
+  <div class="bridge-hero">
+    <div class="bridge-pill">
+      <span>🔗 Project</span>
+      <span>Windows • Desktop Bridge</span>
+    </div>
+    <h1>KivyStudioBridge – Windows Companion for Kivy Studio Android</h1>
+    <p>
+      KivyStudioBridge is a Windows desktop application that connects your code editor to the Kivy Studio
+      Android app. It watches your Python/Kivy project and syncs changes to your device so Kivy Studio
+      can reload your app in real time.
+    </p>
+  </div>
+
+  <div class="bridge-section">
+    <h2>⚙️ What Problem Does KivyStudioBridge Solve?</h2>
+    <p>
+      Without the bridge, you&apos;d have to manually copy files between your PC and Android device, or rely
+      on slow, error‑prone workflows. KivyStudioBridge automates everything: it monitors your project folder,
+      packages the right files, and sends them over the network or USB to Kivy Studio on Android.
+    </p>
+    <div class="bridge-grid">
+      <div class="bridge-card">
+        <h3>🖥️ Desktop–Device Bridge</h3>
+        <p>Connects your Windows machine and Android device so you can code in comfort on your PC and preview on your phone.</p>
+      </div>
+      <div class="bridge-card">
+        <h3>📁 Smart File Watching</h3>
+        <p>Watches Python, KV, and asset files and only sends what changed, keeping the feedback loop fast and efficient.</p>
+      </div>
+      <div class="bridge-card">
+        <h3>🧰 PyQt5 Interface</h3>
+        <p>Clean, modern PyQt5 UI with tabs, logging, and connection status so you can see exactly what the bridge is doing.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="bridge-section">
+    <h2>🧱 Tech Stack & Architecture</h2>
+    <p>
+      KivyStudioBridge is implemented in <strong>Python</strong> and uses <strong>PyQt5</strong> for its GUI,
+      plus sockets and background threads for safe, responsive communication with the Kivy Studio app.
+    </p>
+    <div>
+      <span class="bridge-tag">Python 3.8+</span>
+      <span class="bridge-tag">PyQt5</span>
+      <span class="bridge-tag">Socket Networking</span>
+      <span class="bridge-tag">File Watcher</span>
+      <span class="bridge-tag">Windows Desktop</span>
+    </div>
+  </div>
+
+  <div class="bridge-beta">
+    <h2>⚠️ Beta Release – Update Frequently</h2>
+    <p>
+      The current KivyStudioBridge build is a <strong>beta version</strong>. Features, UI details, and even
+      connection strategies may evolve quickly as the project matures.
+    </p>
+    <p>
+      For the smoothest experience, plan to <strong>download newer releases regularly</strong>, especially when
+      you update the Kivy Studio Android app.
+    </p>
+  </div>
+
+  <div class="bridge-section">
+    <h2>🔗 Explore Project & Download</h2>
+    <p>
+      To learn more about how KivyStudioBridge fits into the whole ecosystem, or to grab the latest Windows
+      build, use the links below to visit the dedicated pages on this site.
+    </p>
+    <div class="bridge-links">
+      <a href="/projects/kivy-studiobridge" class="bridge-link-primary">View KivyStudioBridge Project Page</a>
+      <a href="/downloads/kivy-studiobridge" class="bridge-link-secondary">Go to KivyStudioBridge Download Flow</a>
+    </div>
+  </div>
+</div>`,
+      tags: [tags.python],
+    },
     {
       title: "Modern Blog Platform",
       slug: "modern-blog-platform",

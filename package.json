@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@prisma/client": "^6.16.1",
+    "@supabase/supabase-js": "^2.95.3",
     "@vercel/postgres": "^0.10.0",
     "@vercel/speed-insights": "^1.2.0",
     "date-fns": "^4.1.0",
