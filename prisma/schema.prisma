@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,8 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Core content models for the blog with SEO-focused fields
-
 model Category {
   id          String   @id @default(cuid())
   name        String
@@ -22,18 +14,16 @@ model Category {
   description String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-
-  posts Post[]
+  posts       Post[]
 }
 
 model Tag {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   name      String
-  slug      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  posts PostTag[]
+  slug      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  posts     PostTag[]
 }
 
 model Post {
@@ -41,8 +31,8 @@ model Post {
   title           String
   slug            String     @unique
   excerpt         String?
-  contentMarkdown String     @db.Text
-  contentHtml     String?    @db.Text
+  contentMarkdown String
+  contentHtml     String?
   status          PostStatus @default(DRAFT)
   publishedAt     DateTime?
   canonicalUrl    String?
@@ -53,36 +43,31 @@ model Post {
   views           Int        @default(0)
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
-
-  // Relations
-  category   Category? @relation(fields: [categoryId], references: [id])
-  categoryId String?
-
-  tags PostTag[]
+  categoryId      String?
+  image           String?    @db.VarChar(80)
+  category        Category?  @relation(fields: [categoryId], references: [id])
+  tags            PostTag[]
 }
 
 model PostTag {
-  post   Post   @relation(fields: [postId], references: [id])
   postId String
-
-  tag   Tag    @relation(fields: [tagId], references: [id])
-  tagId String
+  tagId  String
+  post   Post   @relation(fields: [postId], references: [id])
+  tag    Tag    @relation(fields: [tagId], references: [id])
 
   @@id([postId, tagId])
 }
 
-// Store contact form submissions
 model ContactSubmission {
   id        String   @id @default(cuid())
   name      String
   email     String
   subject   String?
-  message   String   @db.Text
+  message   String
   createdAt DateTime @default(now())
   read      Boolean  @default(false)
 }
 
-// Website interaction tracking
 model PageView {
   id        String   @id @default(cuid())
   path      String
@@ -102,9 +87,9 @@ model PageView {
 
 model UserAction {
   id        String   @id @default(cuid())
-  action    String // 'view', 'click', 'search', 'download', etc.
-  target    String? // post slug, button id, etc.
-  metadata  String?  @db.Text // JSON string for additional data
+  action    String
+  target    String?
+  metadata  String?
   path      String?
   userAgent String?
   ipAddress String?
@@ -115,13 +100,12 @@ model UserAction {
   @@index([target])
 }
 
-// Admin audit log
 model AuditLog {
   id        String   @id @default(cuid())
-  action    String // 'create', 'update', 'delete', 'login', 'logout'
-  entity    String // 'post', 'category', 'tag', 'user'
+  action    String
+  entity    String
   entityId  String?
-  details   String?  @db.Text
+  details   String?
   ipAddress String?
   userAgent String?
   createdAt DateTime @default(now())
@@ -135,70 +119,4 @@ enum PostStatus {
   DRAFT
   PUBLISHED
   ARCHIVED
-}
-
-// Mobile app user management
-model User {
-  id                String    @id @default(cuid())
-  deviceId          String    @unique @map("device_id")
-  installedDate     DateTime  @default(now()) @map("installed_date")
-  firstInstallDate  DateTime  @default(now()) @map("first_install_date") // Original installation date
-  lastReinstallDate DateTime? @map("last_reinstall_date") // Last reinstall date
-  reinstallCount    Int       @default(0) @map("reinstall_count") // Number of reinstalls
-  lastLogin         DateTime? @map("last_login")
-  deviceModel       String?   @map("device_model")
-  androidVersion    String?   @map("android_version")
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
-
-  reports Report[]
-
-  @@map("users")
-}
-
-// User reports/bug reports
-model Report {
-  id         String    @id @default(cuid())
-  userId     String    @map("user_id")
-  message    String    @db.Text
-  date       DateTime  @default(now())
-  solved     Boolean   @default(false)
-  dateSolved DateTime? @map("date_solved")
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-  @@index([solved])
-  @@index([date])
-  @@map("reports")
-}
-
-// App version control and update notifications
-model VersionControl {
-  id            String   @id @default(cuid())
-  app           String
-  version       String
-  buildDate     DateTime @map("build_date")
-  updateMessage String?  @map("update_message") @db.Text
-  notification  String?  @db.Text // Long text message to display in user
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  @@unique([app, version])
-  @@index([app])
-  @@index([buildDate])
-  @@map("version_control")
-}
-
-// Server management
-model Server {
-  id        String   @id @default(cuid())
-  url       String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([url])
-  @@map("servers")
 }

@@ -10,8 +10,7 @@ export default function LandingPage() {
             Welcome to My Digital Portfolio
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
-            Exploring the intersection of programming, engineering, and innovation through hands-on projects, 
-            detailed assignments, and insightful vlogs.
+            Exploring the intersection of programming, engineering, and innovation through hands-on projects, and insightful vlogs.
           </p>
         </div>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -57,7 +56,7 @@ export default function LandingPage() {
         </Link>
 
         <Link 
-          href="/assignments" 
+          href="/vlogs" 
           className="group p-8 border-2 border-gray-200 dark:border-gray-800 rounded-xl hover:border-gray-400 dark:hover:border-gray-600 transition-all duration-300 hover:shadow-xl bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800"
         >
           <div className="space-y-4">

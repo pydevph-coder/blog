@@ -44,6 +44,17 @@ async function main() {
     },
   });
 
+  const vlogsCategory = await prisma.category.upsert({
+    where: { slug: "vlogs" },
+    update: {},
+    create: {
+      name: "Vlogs",
+      slug: "vlogs",
+      description:
+        "Video walkthroughs and deep dives for Kivy Studio sample projects and tutorials",
+    },
+  });
+
   console.log("✅ Categories created/updated");
 
   // Create or get tags
@@ -122,29 +133,7 @@ async function main() {
 
   console.log("✅ Tags created/updated");
 
-  // Default ad servers
-  const defaultServers = [
-    "https://otieu.com/4/10326113",
-    "https://otieu.com/4/10327806",
-    "https://otieu.com/4/10326128",
-    "https://otieu.com/4/10327851",
-    "https://www.effectivegatecpm.com/a90jv3etre?key=e644e762868a63ddcf4939b61cd20d9b",
-    "https://www.effectivegatecpm.com/drbexi54g?key=f7f515b2ca2ab9bee1c1b469367de2a0",
-    "https://www.effectivegatecpm.com/z04nrvaw?key=39c23a972c317985c075edee44d76833",
-  ];
-
-  console.log("🌐 Creating default ad servers...");
-  for (const url of defaultServers) {
-    // Skip commented-out URLs if any are left as comments in the array
-    if (!url || url.trim().startsWith("#")) continue;
-
-    await prisma.server.upsert({
-      where: { url },
-      update: {},
-      create: { url },
-    });
-    console.log(`  ✅ Server: ${url}`);
-  }
+ 
 
   // Sample Projects
   const projects = [
@@ -1077,6 +1066,175 @@ async function main() {
     }
 
     console.log(`  ✅ Created assignment: ${assignment.title}`);
+  }
+
+  // Sample Vlogs – map to Kivy Studio sample projects
+  const vlogs = [
+    {
+      title: "2048 Puzzle – Kivy Studio Sample Vlog",
+      slug: "vlog-2048-sample",
+      excerpt:
+        "Video walkthrough of the 2048 puzzle sample project in Kivy Studio, covering grid layouts, tile movement, and game logic.",
+      sampleSlug: "2048",
+    },
+    {
+      title: "Calculator App – Kivy Studio Sample Vlog",
+      slug: "vlog-calculator-sample",
+      excerpt:
+        "Step-by-step vlog explaining the Calculator sample in Kivy Studio: button handling, layout design, and state management.",
+      sampleSlug: "calculator",
+    },
+    {
+      title: "Digital Clock – Kivy Studio Sample Vlog",
+      slug: "vlog-clock-sample",
+      excerpt:
+        "Learn how the Digital Clock sample works in Kivy Studio, including real-time updates, fonts, and timing logic.",
+      sampleSlug: "clock",
+    },
+    {
+      title: "Drawing App – Kivy Studio Sample Vlog",
+      slug: "vlog-drawingapp-sample",
+      excerpt:
+        "Vlog walkthrough of the Drawing App Kivy Studio sample, focusing on touch input, brush tools, and saving drawings.",
+      sampleSlug: "drawingapp",
+    },
+    {
+      title: "Gradient Demo – Kivy Studio Sample Vlog",
+      slug: "vlog-gradientdemo-sample",
+      excerpt:
+        "A vlog demonstrating the Gradient Demo Kivy Studio sample, showing custom backgrounds, color transitions, and visual polish.",
+      sampleSlug: "gradientdemo",
+    },
+    {
+      title: "KivyBird Game – Kivy Studio Sample Vlog",
+      slug: "vlog-kivybird-sample",
+      excerpt:
+        "Flappy Bird-style KivyBird sample explained: sprites, collision detection, and basic game loops in Kivy Studio.",
+      sampleSlug: "kivybird",
+    },
+    {
+      title: "Space Game – Kivy Studio Sample Vlog",
+      slug: "vlog-spacegame-sample",
+      excerpt:
+        "An arcade-style space game vlog explaining movement, shooting mechanics, and basic game physics using Kivy.",
+      sampleSlug: "spacegame",
+    },
+    {
+      title: "AdMob Integration – Kivy Studio Sample Vlog",
+      slug: "vlog-admob-sample",
+      excerpt:
+        "Learn how to integrate AdMob ads in Kivy apps through this Kivy Studio sample vlog, covering banner and interstitial ads.",
+      sampleSlug: "admob",
+    },
+    {
+      title: "TensorFlow Lite Object Detection – Kivy Studio Sample Vlog",
+      slug: "vlog-c4k-tflite-sample",
+      excerpt:
+        "Hands-on vlog with the Camera4Kivy + TensorFlow Lite object detection sample running inside Kivy Studio.",
+      sampleSlug: "c4k-tflite",
+    },
+    {
+      title: "TensorFlow Lite Example (Camera4Kivy) – Kivy Studio Sample Vlog",
+      slug: "vlog-c4k-tflite-example-sample",
+      excerpt:
+        "A full TensorFlow Lite example project vlog using Camera4Kivy and Kivy Studio, perfect for learning ML on Android with Python.",
+      sampleSlug: "c4k-tflite-example",
+    },
+    {
+      title: "QR Code Scanner – Kivy Studio Sample Vlog",
+      slug: "vlog-c4k-qr-example-sample",
+      excerpt:
+        "Vlog walkthrough of the Camera4Kivy QR Code Scanner sample, teaching camera access and real-time frame processing in Kivy Studio.",
+      sampleSlug: "c4k-qr-example",
+    },
+    {
+      title: "Camera Photo App – Kivy Studio Sample Vlog",
+      slug: "vlog-c4k-photo-sample",
+      excerpt:
+        "Vlog showing the Camera Photo App sample in Kivy Studio: capturing, saving, and navigating between screens in a mobile app.",
+      sampleSlug: "c4k-photo",
+    },
+    {
+      title: "Scanatomy – Kivy Studio Medical Imaging Sample Vlog",
+      slug: "vlog-scanatomy-sample",
+      excerpt:
+        "A vlog walkthrough of Scanatomy, a complex medical imaging Kivy Studio sample demonstrating images, navigation, and interactivity.",
+      sampleSlug: "scanatomy",
+    },
+    {
+      title: "Map Sample – Kivy Studio Mapping Project Vlog",
+      slug: "vlog-mapsample-sample",
+      excerpt:
+        "Vlog covering the Map Sample Kivy Studio project, showing maps integration, location-based content, and HTML views inside Kivy apps.",
+      sampleSlug: "mapsample",
+    },
+  ];
+  
+  // Create vlogs (for /category/vlogs listing, linking to /vlogs/[slug])
+  console.log("🎥 Creating vlogs...");
+  for (const vlog of vlogs) {
+    const contentHtml = `<div style="max-width: 900px; margin: 0 auto; padding: 2rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #111827;">
+  <style>
+    .vlog-header { background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 50%, #0f172a 100%); padding: 2.5rem 2rem; border-radius: 18px; color: #e5e7eb; margin-bottom: 2rem; }
+    .vlog-header h1 { margin: 0; font-size: 2.1rem; font-weight: 800; letter-spacing: -0.04em; }
+    .vlog-header p { margin-top: 0.75rem; max-width: 640px; font-size: 0.98rem; opacity: 0.9; }
+    .vlog-pill { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.35rem 0.85rem; border-radius: 999px; background: rgba(15,23,42,0.9); border: 1px solid rgba(196,181,253,0.6); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #e5e7eb; margin-bottom: 0.9rem; }
+    .vlog-section { margin: 2rem 0; }
+    .vlog-section h2 { font-size: 1.35rem; margin-bottom: 0.6rem; color: #111827; border-bottom: 2px solid #7c3aed; display: inline-block; padding-bottom: 0.25rem; }
+    .vlog-link { display: inline-flex; align-items: center; justify-content: center; padding: 0.55rem 1.2rem; border-radius: 999px; background: #7c3aed; color: white; font-weight: 600; font-size: 0.9rem; text-decoration: none; box-shadow: 0 10px 30px rgba(124,58,237,0.4); }
+  </style>
+
+  <div class="vlog-header">
+    <div class="vlog-pill">🎥 Kivy Studio Sample Vlog</div>
+    <h1>${vlog.title}</h1>
+    <p>${vlog.excerpt}</p>
+  </div>
+
+  <div class="vlog-section">
+    <h2>📺 Watch the Full Vlog</h2>
+    <p>
+      This blog entry is a companion to the full video vlog for this Kivy Studio sample project.
+      Visit the dedicated vlog page to watch the video, see screenshots, and grab the downloadable
+      project files.
+    </p>
+    <p style="margin-top: 1rem;">
+      <a class="vlog-link" href="/vlogs/${vlog.sampleSlug}">Open Vlog Page for This Sample</a>
+    </p>
+  </div>
+</div>`;
+
+    const publishedAt = new Date();
+    publishedAt.setDate(publishedAt.getDate() - Math.floor(Math.random() * 30));
+
+    const textContent = contentHtml.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+    const readingTimeMin = Math.ceil(textContent.split(/\s+/).length / 200);
+
+    await prisma.post.upsert({
+      where: { slug: vlog.slug },
+      update: {
+        title: vlog.title,
+        excerpt: vlog.excerpt,
+        contentMarkdown: "",
+        contentHtml,
+        status: "PUBLISHED",
+        publishedAt,
+        categoryId: vlogsCategory.id,
+        readingTimeMin,
+      },
+      create: {
+        title: vlog.title,
+        slug: vlog.slug,
+        excerpt: vlog.excerpt,
+        contentMarkdown: "",
+        contentHtml,
+        status: "PUBLISHED",
+        publishedAt,
+        categoryId: vlogsCategory.id,
+        readingTimeMin,
+      },
+    });
+
+    console.log(`  🎥 Created vlog entry: ${vlog.title}`);
   }
 
   console.log("🎉 Seed completed successfully!");

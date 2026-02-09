@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Script from "next/script";
 
 const STEPS = [
   "Overview & Requirements",
@@ -94,6 +95,12 @@ export function KivyStudioDownloadClient() {
   const goPrev = () => setStep((s) => Math.max(s - 1, 0));
 
   return (
+    <>
+      {/* Adsterra Popunder Script */}
+      <Script
+        src="https://pl28682294.effectivegatecpm.com/c4/70/c0/c470c027d903ceccfba531a44f34b794.js"
+        strategy="beforeInteractive"
+      />
     <main className="w-full px-4 py-12">
       <div className="flex gap-6 max-w-7xl mx-auto">
         {/* Left ad rail */}
@@ -280,6 +287,7 @@ export function KivyStudioDownloadClient() {
         </div>
       </div>
     </main>
+    </>
   );
 }
 

@@ -123,7 +123,7 @@ export default function KivyStudioBridgeProjectPage() {
                 <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-gray-200 bg-slate-950 dark:border-gray-700">
                   <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 px-6 text-center">
                     <Image
-                      src="/window.svg"
+                      src="/studio/bridge.png"
                       width={96}
                       height={96}
                       alt="KivyStudioBridge icon"

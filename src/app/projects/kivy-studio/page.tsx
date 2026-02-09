@@ -95,7 +95,7 @@ export default function KivyStudioProjectPage() {
                   Download Kivy Studio (APK & Source)
                 </Link>
                 <Link
-                  href="/post"
+                  href="/vlogs"
                   className="inline-flex items-center justify-center rounded-lg border border-gray-300 px-6 py-3 text-sm font-semibold text-gray-800 transition hover:bg-gray-50 dark:border-gray-700 dark:text-gray-100 dark:hover:bg-gray-800/60"
                 >
                   View Blog Posts About Kivy Studio
@@ -124,11 +124,11 @@ export default function KivyStudioProjectPage() {
                 <div className="relative aspect-[9/16] overflow-hidden rounded-2xl border border-gray-200 bg-slate-950 dark:border-gray-700">
                   <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 px-6 text-center">
                     <Image
-                      src="/file.svg"
+                      src="/studio/icon.png"
                       width={96}
                       height={96}
                       alt="Kivy Studio icon"
-                      className="h-20 w-20 rounded-2xl bg-slate-900/70 p-4 shadow-lg shadow-blue-500/30"
+                      className="h-20 w-20 rounded-2xl bg-white p-4 shadow-lg shadow-blue-500/30"
                     />
                     <h2 className="text-lg font-semibold text-white">
                       Live Python & Kivy on Android
