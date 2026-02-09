@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Script from "next/script";
+import AdBanner from "@/components/AdBanner";
 
 const STEPS = [
   "Overview & Requirements",
@@ -142,8 +143,7 @@ export function KivyStudioDownloadClient() {
 
             {/* Top in-content ad */}
             <div className="rounded-xl border border-dashed border-gray-300 bg-gray-50 px-4 py-5 text-center text-xs text-gray-500 dark:border-gray-700 dark:bg-gray-900/40 dark:text-gray-400">
-              Ad Space • Prime slot above the download wizard, visible to everyone landing on this
-              page.
+              <AdBanner/>
             </div>
           </section>
 
