@@ -108,13 +108,8 @@ export function KivyStudioDownloadClient() {
       <div className="flex gap-6 max-w-7xl mx-auto">
         {/* Left ad rail */}
         <aside className="hidden lg:block w-64 flex-shrink-0">
-          <div className="sticky top-24 space-y-4">
-            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[220px] flex items-center justify-center border border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
-              <AdBanner468x60 />
-            </div>
-            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[220px] flex items-center justify-center border border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
-              <AdBanner320x50 />
-            </div>
+          <div className=" top-24 space-y-4">
+          <AdBannerContainer/>
           </div>
         </aside>
 
@@ -191,10 +186,9 @@ export function KivyStudioDownloadClient() {
               {step === 2 && <StepDownloadLinks />}
 
               {/* Middle in-flow ad */}
-              <div className="rounded-xl border border-dashed border-amber-300 bg-amber-50 px-4 py-5 text-center text-xs text-amber-800 dark:border-amber-700 dark:bg-amber-900/30 dark:text-amber-100">
-                
-                <AdBanner468x60 />
-              </div>
+              <div className="rounded-xl border border-dashed border-gray-300 bg-gray-50 px-4 py-5 text-center text-xs text-gray-500 dark:border-gray-700 dark:bg-gray-900/40 dark:text-gray-400">
+            <AdBanner468x60 />
+            </div>
 
               <div className="flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex gap-3">
@@ -265,7 +259,7 @@ export function KivyStudioDownloadClient() {
 
             <div className="space-y-4">
               <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 text-center text-xs text-gray-600 dark:border-gray-700 dark:bg-gray-900/60 dark:text-gray-300">
-              <AdBanner468x60 />
+              <AdBanner320x50 />
               </div>
               <div className="rounded-xl border border-blue-200 bg-blue-50 p-4 text-xs text-blue-900 dark:border-blue-700 dark:bg-blue-900/30 dark:text-blue-100">
                 Looking for more details first?{" "}
@@ -278,12 +272,8 @@ export function KivyStudioDownloadClient() {
           </section>
         </div>
       </div>
-      <AdBannerContainer 
-      containerId="ad-468x60-container"
-      strategy="beforeInteractive"
-      >
-        <AdBanner468x60 />
-      </AdBannerContainer>
+      
+      
     </main>
     </>
   );
