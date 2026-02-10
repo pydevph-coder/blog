@@ -3,19 +3,30 @@
 import { useEffect } from "react";
 import Script from "next/script";
 
-// Global popunder scripts (use once in layout)
+/* ---------- Type support for ad script ---------- */
+declare global {
+  interface Window {
+    atOptions?: {
+      key: string;
+      format: string;
+      height: number;
+      width: number;
+      params: Record<string, unknown>;
+    };
+  }
+}
+
+/* ---------- Global popunder scripts ---------- */
 
 export function GlobalPopunderScripts() {
   return (
     <>
-      {/* Popunder suggested for <head> – we load after hydration */}
       <Script
         id="popunder-top"
         src="https://pl28682294.effectivegatecpm.com/c4/70/c0/c470c027d903ceccfba531a44f34b794.js"
         strategy="afterInteractive"
       />
 
-      {/* Popunder suggested before </body> */}
       <Script
         id="popunder-bottom"
         src="https://pl28682352.effectivegatecpm.com/fd/0f/9e/fd0f9e7c5ec34e88dff09ea3d1b4439f.js"
@@ -25,7 +36,7 @@ export function GlobalPopunderScripts() {
   );
 }
 
-// 468x60 banner – rendered in-place
+/* ---------- 468x60 banner ---------- */
 
 export function AdBanner468x60() {
   const containerId = "ad-468x60-container";
@@ -33,7 +44,7 @@ export function AdBanner468x60() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    (window as any).atOptions = {
+    window.atOptions = {
       key: "89fd2317f6e2b437cdde510b2d21dd6c",
       format: "iframe",
       height: 60,
@@ -62,7 +73,7 @@ export function AdBanner468x60() {
   );
 }
 
-// Responsive/container banner block
+/* ---------- Responsive container banner ---------- */
 
 export function AdBannerContainer() {
   const containerId = "container-68d358cd97189f3d2e4f773c995f3ef1";
@@ -74,7 +85,7 @@ export function AdBannerContainer() {
     script.src =
       "https://pl28682386.effectivegatecpm.com/68d358cd97189f3d2e4f773c995f3ef1/invoke.js";
     script.async = true;
-    (script as any)["data-cfasync"] = "false";
+    script.setAttribute("data-cfasync", "false");
 
     const container = document.getElementById(containerId);
     if (container) {
@@ -86,7 +97,31 @@ export function AdBannerContainer() {
   return <div id={containerId} className="flex justify-center" />;
 }
 
-// 320x50 banner (mobile) – rendered in-place
+/* ---------- Vertical container banner ---------- */
+
+export function AdBannerVerticalContainer() {
+  const containerId = "container-68d358cd97189f3d2e4f773c995f3ef1";
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const script = document.createElement("script");
+    script.src =
+      "https://pl28682386.effectivegatecpm.com/68d358cd97189f3d2e4f773c995f3ef1/invoke.js";
+    script.async = true;
+    script.setAttribute("data-cfasync", "false");
+
+    const container = document.getElementById(containerId);
+    if (container) {
+      container.innerHTML = "";
+      container.appendChild(script);
+    }
+  }, []);
+
+  return <div id={containerId} className="flex justify-center" />;
+}
+
+/* ---------- 320x50 mobile banner ---------- */
 
 export function AdBanner320x50() {
   const containerId = "ad-320x50-container";
@@ -94,7 +129,7 @@ export function AdBanner320x50() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    (window as any).atOptions = {
+    window.atOptions = {
       key: "83e171a7d2c565bf53337a3f95c40907",
       format: "iframe",
       height: 50,
@@ -122,4 +157,3 @@ export function AdBanner320x50() {
     />
   );
 }
-
