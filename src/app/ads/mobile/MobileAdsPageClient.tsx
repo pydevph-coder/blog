@@ -95,7 +95,7 @@ export function MobileAdsPageClient() {
                 <AdBanner300x160 />
               </div>
               <div className="rounded-xl bg-slate-950/70 border border-slate-800 px-2 py-3 flex justify-center">
-                <AdBanner468x60 />
+              <AdBanner320x50 />
               </div>
             </div>
 
