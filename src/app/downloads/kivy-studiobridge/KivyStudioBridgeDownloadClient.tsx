@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { AdBanner468x60, AdBanner320x50, AdBannerContainer,AdBanner300x160 } from "@/components/Ads";
+import { AdBanner468x60, AdBanner320x50, AdBannerContainer } from "@/components/Ads";
+import {AdBanner300x160} from "@/components/Banner1"
 
 const STEPS = [
   "Overview & Requirements",
@@ -43,18 +44,7 @@ export function KivyStudioBridgeDownloadClient() {
         {/* Left ad rail */}
         <aside className="hidden lg:block w-64 flex-shrink-0">
           <div className="sticky top-24 space-y-4">
-            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[250px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
-              <AdBanner468x60 />
-            </div>
-            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[70px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
-              <AdBanner320x50 />
-            </div>
-            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[70px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
-              <AdBanner320x50 />
-            </div>
-            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[70px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
-              <AdBanner320x50 />
-            </div>
+          <AdBannerContainer/>
           </div>
         </aside>
 
@@ -131,7 +121,7 @@ export function KivyStudioBridgeDownloadClient() {
               {step === 2 && <StepDownloadLinks />}
 
               {/* Mid-flow ad */}
-              <div className="rounded-xl border border-dashed border-amber-300 bg-amber-50 px-4 py-5 text-center text-xs text-amber-800 dark:border-amber-700 dark:bg-amber-900/30 dark:text-amber-100">
+              <div id="ad-300x160-container" className="rounded-xl border border-dashed border-amber-300 bg-amber-50 px-4 py-5 text-center text-xs text-amber-800 dark:border-amber-700 dark:bg-amber-900/30 dark:text-amber-100">
                 <AdBanner300x160 />
               </div>
 
