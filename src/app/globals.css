@@ -32,3 +32,22 @@ body main {
   margin-left: 0 !important;
   margin-right: 0 !important;
 }
+
+/* Simple mobile / desktop visibility helpers */
+.mobileShow {
+  display: none;
+}
+
+.mobileHide {
+  display: inline;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .mobileShow {
+    display: inline;
+  }
+
+  .mobileHide {
+    display: none;
+  }
+}

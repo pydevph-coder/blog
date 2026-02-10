@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import SearchAndFilters from "@/components/SearchAndFilters";
+import { AdBanner468x60, AdBanner320x50, AdBannerContainer } from "@/components/Ads";
 
 export default async function ProjectsPage() {
   // Get projects category posts with tags
@@ -68,14 +69,20 @@ export default async function ProjectsPage() {
       <div className="flex gap-6 max-w-7xl mx-auto">
         {/* Left Sidebar for Ads */}
         <aside className="hidden lg:block w-64 flex-shrink-0">
-          <div className="sticky top-24 space-y-4">
-            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[250px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
-              <p className="text-sm text-gray-500 dark:text-gray-400 text-center">Ad Space</p>
+          <div className=" top-24 space-y-4">
+            {/* <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[250px] flex items-center justify-center border border-gray-200 dark:border-gray-700"> */}
+              <AdBannerContainer/>
+            {/* </div> */}
+            {/* <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[70px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
+              <AdBanner320x50 />
             </div>
-            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[250px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
-              <p className="text-sm text-gray-500 dark:text-gray-400 text-center">Ad Space</p>
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[70px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
+              <AdBanner320x50 />
             </div>
-          </div>
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[70px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
+              <AdBanner320x50 />
+            </div> */}
+         </div>
         </aside>
 
         {/* Main Content */}
@@ -88,17 +95,17 @@ export default async function ProjectsPage() {
           </svg>
         </div>
         <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-400 bg-clip-text text-transparent">
-          My Projects
+          Kivy Studio Projects
         </h1>
-        <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
+        {/* <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
           Discover my innovative projects spanning web development, software engineering, and cutting-edge technologies. 
           Each project showcases problem-solving skills, technical expertise, and a passion for creating meaningful solutions. 
           Explore detailed walkthroughs, code examples, and lessons learned.
-        </p>
+        </p> */}
       </section>
 
       {/* Features Grid */}
-      <section className="grid md:grid-cols-3 gap-6 mb-12">
+      {/* <section className="grid md:grid-cols-3 gap-6 mb-12">
         <div className="p-6 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
           <div className="w-12 h-12 bg-blue-600 dark:bg-blue-500 rounded-lg flex items-center justify-center mb-4">
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -134,7 +141,7 @@ export default async function ProjectsPage() {
             Sharing knowledge through detailed documentation and tutorials
           </p>
         </div>
-      </section>
+      </section> */}
 
       {/* Search and Filters with Projects List */}
       {projects.length > 0 ? (
@@ -145,9 +152,10 @@ export default async function ProjectsPage() {
       ) : (
         <section className="text-center py-16 space-y-4">
           <div className="w-16 h-16 mx-auto bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center">
-            <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <img src="/studio/icon.png" alt="No Projects" width={64} height={64} />
+            {/* <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-            </svg>
+            </svg> */}
           </div>
           <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">No projects yet</h3>
           <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">

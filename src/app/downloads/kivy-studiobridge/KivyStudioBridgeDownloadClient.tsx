@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { AdBanner468x60, AdBanner320x50, AdBannerContainer } from "@/components/Ads";
 
 const STEPS = [
   "Overview & Requirements",
@@ -42,20 +43,17 @@ export function KivyStudioBridgeDownloadClient() {
         {/* Left ad rail */}
         <aside className="hidden lg:block w-64 flex-shrink-0">
           <div className="sticky top-24 space-y-4">
-            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[220px] flex items-center justify-center border border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
-              Desktop Ad Slot
-              <br />
-              <span className="text-xs">
-                High-intent Windows developers downloading KivyStudioBridge – great for IDEs, tools,
-                and hosting.
-              </span>
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[250px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
+              <AdBanner468x60 />
             </div>
-            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[220px] flex items-center justify-center border border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
-              Sticky Ad Slot
-              <br />
-              <span className="text-xs">
-                Always visible beside the step wizard to maximize ad impressions.
-              </span>
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[70px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
+              <AdBanner320x50 />
+            </div>
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[70px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
+              <AdBanner320x50 />
+            </div>
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[70px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
+              <AdBanner320x50 />
             </div>
           </div>
         </aside>
@@ -78,7 +76,7 @@ export function KivyStudioBridgeDownloadClient() {
 
             {/* Top in-content ad */}
             <div className="rounded-xl border border-dashed border-gray-300 bg-gray-50 px-4 py-5 text-center text-xs text-gray-500 dark:border-gray-700 dark:bg-gray-900/40 dark:text-gray-400">
-              Ad Space • Prime placement above the download wizard, visible to every visitor.
+              <AdBanner468x60 />
             </div>
           </section>
 
@@ -134,7 +132,7 @@ export function KivyStudioBridgeDownloadClient() {
 
               {/* Mid-flow ad */}
               <div className="rounded-xl border border-dashed border-amber-300 bg-amber-50 px-4 py-5 text-center text-xs text-amber-800 dark:border-amber-700 dark:bg-amber-900/30 dark:text-amber-100">
-                Ad Space • Users are highly engaged between steps – ideal for premium ad placements.
+                <AdBanner468x60 />
               </div>
 
               <div className="flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -191,7 +189,7 @@ export function KivyStudioBridgeDownloadClient() {
 
             <div className="space-y-4">
               <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 text-center text-xs text-gray-600 dark:border-gray-700 dark:bg-gray-900/60 dark:text-gray-300">
-                Ad Space • Lower-page slot for contextual ads, course promotions, or partner tools.
+                <AdBanner468x60 />
               </div>
               <div className="rounded-xl border border-blue-200 bg-blue-50 p-4 text-xs text-blue-900 dark:border-blue-700 dark:bg-blue-900/30 dark:text-blue-100">
                 Want to see the full ecosystem?{" "}
@@ -278,8 +276,7 @@ function StepBetaNotice() {
 
       <div className="space-y-3">
         <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 text-xs text-gray-600 dark:border-gray-700 dark:bg-gray-900/60 dark:text-gray-300">
-          Ad Space • This intentional pause before the download is a perfect place for high-impact
-          ads or sponsorships.
+          <AdBanner468x60 />
         </div>
         <div className="rounded-xl border border-indigo-200 bg-indigo-50 p-4 text-xs text-indigo-900 dark:border-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-100">
           Check this page again periodically to see when a new KivyStudioBridge beta or stable build

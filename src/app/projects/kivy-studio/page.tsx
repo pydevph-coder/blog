@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { buildMetadata } from "@/lib/seo";
+import { AdBanner468x60, AdBanner320x50, AdBannerContainer } from "@/components/Ads";
 
 export const metadata = buildMetadata({
   title: "Kivy Studio – Expo Go for Kivy/Python Android Development",
@@ -18,14 +19,16 @@ export default function KivyStudioProjectPage() {
         <aside className="hidden lg:block w-64 flex-shrink-0">
           <div className="sticky top-24 space-y-4">
             <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[250px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
-              <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
-                Ad Space • Perfect for developer tools, hosting, and course promos
-              </p>
+              <AdBanner468x60 />
             </div>
-            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[250px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
-              <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
-                Ad Space • High-visibility slot beside hero + feature sections
-              </p>
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[70px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
+              <AdBanner320x50 />
+            </div>
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[70px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
+              <AdBanner320x50 />
+            </div>
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[70px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
+              <AdBanner320x50 />
             </div>
           </div>
         </aside>
@@ -145,8 +148,7 @@ export default function KivyStudioProjectPage() {
 
           {/* In-content ad slot */}
           <section className="rounded-xl border border-dashed border-gray-300 bg-gray-50 px-6 py-8 text-center text-sm text-gray-500 dark:border-gray-700 dark:bg-gray-900/40 dark:text-gray-400">
-            Ad Space • Ideal mid-article placement between hero and deep-dive content for maximum
-            visibility and engagement.
+            <AdBanner468x60 />
           </section>
 
           {/* Key capabilities */}
@@ -292,8 +294,7 @@ if __name__ == "__main__":
                 </div>
 
                 <div className="rounded-xl border border-dashed border-amber-300 bg-amber-50/70 p-4 text-center text-xs text-amber-700 dark:border-amber-700 dark:bg-amber-900/30 dark:text-amber-200">
-                  Ad Space • A natural break between workflow explanation and code example – great
-                  for tutorial, course, or hosting banners.
+                  <AdBanner468x60 />
                 </div>
               </div>
             </div>

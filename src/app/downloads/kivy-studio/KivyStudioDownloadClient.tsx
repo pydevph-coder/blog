@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Script from "next/script";
-import AdBanner from "@/components/AdBanner";
+import { AdBanner468x60, AdBanner320x50, AdBannerContainer } from "@/components/Ads";
+
+// import AdBanner from "@/components/AdBanner";
 
 const STEPS = [
   "Overview & Requirements",
@@ -108,19 +110,10 @@ export function KivyStudioDownloadClient() {
         <aside className="hidden lg:block w-64 flex-shrink-0">
           <div className="sticky top-24 space-y-4">
             <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[220px] flex items-center justify-center border border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
-              Premium Ad Slot
-              <br />
-              <span className="text-xs">
-                High-intent users heading to the Kivy Studio download page – perfect for tools,
-                hosting, and course offers.
-              </span>
+              <AdBanner468x60 />
             </div>
             <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[220px] flex items-center justify-center border border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
-              Sticky Ad Slot
-              <br />
-              <span className="text-xs">
-                Always visible next to the download steps to maximize impressions.
-              </span>
+              <AdBanner320x50 />
             </div>
           </div>
         </aside>
@@ -143,7 +136,7 @@ export function KivyStudioDownloadClient() {
 
             {/* Top in-content ad */}
             <div className="rounded-xl border border-dashed border-gray-300 bg-gray-50 px-4 py-5 text-center text-xs text-gray-500 dark:border-gray-700 dark:bg-gray-900/40 dark:text-gray-400">
-              <AdBanner/>
+            <AdBanner468x60 />
             </div>
           </section>
 
@@ -199,8 +192,8 @@ export function KivyStudioDownloadClient() {
 
               {/* Middle in-flow ad */}
               <div className="rounded-xl border border-dashed border-amber-300 bg-amber-50 px-4 py-5 text-center text-xs text-amber-800 dark:border-amber-700 dark:bg-amber-900/30 dark:text-amber-100">
-                Ad Space • High-intent users between steps 2 and 3 of the download process – ideal
-                for premium placements.
+                
+                <AdBanner468x60 />
               </div>
 
               <div className="flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -272,8 +265,7 @@ export function KivyStudioDownloadClient() {
 
             <div className="space-y-4">
               <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 text-center text-xs text-gray-600 dark:border-gray-700 dark:bg-gray-900/60 dark:text-gray-300">
-                Ad Space • Lower-page slot near educational copy for contextual ads and related
-                resources.
+              <AdBanner468x60 />
               </div>
               <div className="rounded-xl border border-blue-200 bg-blue-50 p-4 text-xs text-blue-900 dark:border-blue-700 dark:bg-blue-900/30 dark:text-blue-100">
                 Looking for more details first?{" "}
@@ -286,6 +278,12 @@ export function KivyStudioDownloadClient() {
           </section>
         </div>
       </div>
+      <AdBannerContainer 
+      containerId="ad-468x60-container"
+      strategy="beforeInteractive"
+      >
+        <AdBanner468x60 />
+      </AdBannerContainer>
     </main>
     </>
   );
@@ -361,8 +359,7 @@ function StepChooseType() {
 
       <div className="space-y-3">
         <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 text-xs text-gray-600 dark:border-gray-700 dark:bg-gray-900/60 dark:text-gray-300">
-          Ad Space • This step intentionally adds a short pause before downloading, making it a
-          great place for highly visible ads or partner promotions.
+        <AdBanner468x60 />
         </div>
         <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-xs text-emerald-900 dark:border-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-100">
           Tip: Check back on this page regularly to see when a new beta or stable APK is available.

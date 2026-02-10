@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { buildMetadata } from "@/lib/seo";
+import { AdBanner468x60, AdBanner320x50, AdBannerContainer } from "@/components/Ads";
 
 export const metadata = buildMetadata({
   title: "KivyStudioBridge – Windows Companion for Kivy Studio Android",
@@ -18,14 +19,16 @@ export default function KivyStudioBridgeProjectPage() {
         <aside className="hidden lg:block w-64 flex-shrink-0">
           <div className="sticky top-24 space-y-4">
             <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[250px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
-              <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
-                Ad Space • Ideal for desktop tools, IDEs, and developer utilities
-              </p>
+              <AdBanner468x60 />
             </div>
-            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[250px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
-              <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
-                Ad Space • High-visibility slot beside hero and feature sections
-              </p>
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[70px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
+              <AdBanner320x50 />
+            </div>
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[70px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
+              <AdBanner320x50 />
+            </div>
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[70px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
+              <AdBanner320x50 />
             </div>
           </div>
         </aside>
@@ -144,8 +147,7 @@ export default function KivyStudioBridgeProjectPage() {
 
           {/* Mid-page ad */}
           <section className="rounded-xl border border-dashed border-gray-300 bg-gray-50 px-6 py-8 text-center text-sm text-gray-500 dark:border-gray-700 dark:bg-gray-900/40 dark:text-gray-400">
-            Ad Space • Great mid-article placement for Windows tools, cloud IDEs, and dev
-            workstations.
+            <AdBanner468x60 />
           </section>
 
           {/* What it does */}
@@ -257,8 +259,7 @@ export default function KivyStudioBridgeProjectPage() {
                 </div>
 
                 <div className="rounded-xl border border-dashed border-amber-300 bg-amber-50/70 p-4 text-center text-xs text-amber-700 dark:border-amber-700 dark:bg-amber-900/30 dark:text-amber-200">
-                  Ad Space • Natural break between workflow description and setup steps – ideal for
-                  dev tools, hosting, and training offers.
+                  <AdBanner468x60 />
                 </div>
               </div>
             </div>

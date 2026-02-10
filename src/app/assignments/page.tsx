@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import SearchAndFilters from "@/components/SearchAndFilters";
+import { AdBanner468x60, AdBanner320x50, AdBannerContainer } from "@/components/Ads";
 
 export default async function AssignmentsPage() {
   // Get assignments category posts with tags
@@ -70,10 +71,16 @@ export default async function AssignmentsPage() {
         <aside className="hidden lg:block w-64 flex-shrink-0">
           <div className="sticky top-24 space-y-4">
             <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[250px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
-              <p className="text-sm text-gray-500 dark:text-gray-400 text-center">Ad Space</p>
+              <AdBanner468x60 />
             </div>
-            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[250px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
-              <p className="text-sm text-gray-500 dark:text-gray-400 text-center">Ad Space</p>
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[70px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
+              <AdBanner320x50 />
+            </div>
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[70px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
+              <AdBanner320x50 />
+            </div>
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[70px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
+              <AdBanner320x50 />
             </div>
           </div>
         </aside>

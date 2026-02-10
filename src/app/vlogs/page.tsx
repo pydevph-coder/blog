@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { buildMetadata } from "@/lib/seo";
+import { AdBanner468x60, AdBanner320x50, AdBannerContainer } from "@/components/Ads";
 
 export const metadata: Metadata = buildMetadata({
   title: "Kivy Studio Sample Vlogs",
@@ -45,31 +46,10 @@ export default async function VlogsLandingPage() {
     <main className="w-full px-4 py-12">
       <div className="flex max-w-7xl mx-auto gap-6">
         {/* Left Sidebar for Ads */}
-        <aside className="hidden lg:block w-64 flex-shrink-0 space-y-6">
-          {posts.slice(0, 200).map((adPost) => (
-            <div
-              key={adPost.id}
-              className="bg-white/80 dark:bg-gray-900/70 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm"
-            >
-              {adPost.image && (
-                <img
-                  src={adPost.image}
-                  alt={adPost.title}
-                  className="w-full h-32 object-cover"
-                />
-              )}
-              <div className="p-4">
-                <h3 className="font-semibold text-gray-900 dark:text-gray-50 text-sm mb-1 line-clamp-2">
-                  {adPost.title}
-                </h3>
-                {adPost.excerpt && (
-                  <p className="text-xs text-gray-600 dark:text-gray-400">
-                    {truncate(adPost.excerpt, 80)}
-                  </p>
-                )}
-              </div>
-            </div>
-          ))}
+        <aside className="hidden lg:block w-64 flex-shrink-0">
+          <div className="top-24 space-y-4">
+          <AdBannerContainer/>
+          </div>
         </aside>
 
         {/* Main Content */}

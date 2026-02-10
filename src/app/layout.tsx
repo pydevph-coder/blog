@@ -5,6 +5,7 @@ import { buildMetadata } from "@/lib/seo";
 import NavSwitcher from "@/components/NavSwitcher";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import TrackingScript from "@/components/TrackingScript";
+import { GlobalPopunderScripts } from "@/components/Ads";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,6 +26,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+      <GlobalPopunderScripts />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -32,6 +36,7 @@ export default function RootLayout({
         <div className="w-full px-1 md:px-4 py-4">{children}</div>
         <TrackingScript />
         <SpeedInsights />
+        
       </body>
     </html>
   );
