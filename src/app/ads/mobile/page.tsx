@@ -1,6 +1,7 @@
 import { buildMetadata } from "@/lib/seo";
 import { MobileAdsPageClient } from "./MobileAdsPageClient";
 
+export const dynamic = "force-dynamic";
 export const metadata = buildMetadata({
   title: "Kivy Studio – Support Screen (Mobile Ads)",
   description:

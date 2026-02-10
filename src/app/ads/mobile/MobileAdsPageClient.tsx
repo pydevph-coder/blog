@@ -1,21 +1,31 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import {
   GlobalPopunderScripts,
   AdBannerContainer,
   AdBanner320x50,
   AdBanner468x60,
 } from "@/components/Ads";
-import {AdBanner300x160} from "@/components/Banner1"
+import { AdBanner300x160 } from "@/components/Banner1";
 
 export function MobileAdsPageClient() {
-  const searchParams = useSearchParams();
   const [secondsLeft, setSecondsLeft] = useState(15);
   const [canContinue, setCanContinue] = useState(false);
+  const [nextUrl, setNextUrl] = useState<string | null>(null);
 
-  const nextUrl = searchParams.get("next") || "";
+  // Read ?next=... only on the client from window.location
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    try {
+      const url = new URL(window.location.href);
+      const next = url.searchParams.get("next");
+      if (next) setNextUrl(next);
+    } catch {
+      // ignore parsing errors
+    }
+  }, []);
 
   useEffect(() => {
     let interval: number | undefined;
@@ -43,11 +53,8 @@ export function MobileAdsPageClient() {
   const handleContinue = () => {
     if (nextUrl) {
       window.location.href = nextUrl;
-    } else {
-      // Fallback: let the host app close the WebView or go back
-      if (window.history.length > 1) {
-        window.history.back();
-      }
+    } else if (window.history.length > 1) {
+      window.history.back();
     }
   };
 
@@ -130,5 +137,3 @@ export function MobileAdsPageClient() {
     </>
   );
 }
-
-
