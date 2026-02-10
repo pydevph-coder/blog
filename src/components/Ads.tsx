@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useId } from "react";
 import Script from "next/script";
 
 /* ---------- Type support for ad script ---------- */
@@ -97,30 +98,6 @@ export function AdBannerContainer() {
   return <div id={containerId} className="flex justify-center" />;
 }
 
-/* ---------- Vertical container banner ---------- */
-
-export function AdBannerVerticalContainer() {
-  const containerId = "container-68d358cd97189f3d2e4f773c995f3ef1";
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const script = document.createElement("script");
-    script.src =
-      "https://pl28682386.effectivegatecpm.com/68d358cd97189f3d2e4f773c995f3ef1/invoke.js";
-    script.async = true;
-    script.setAttribute("data-cfasync", "false");
-
-    const container = document.getElementById(containerId);
-    if (container) {
-      container.innerHTML = "";
-      container.appendChild(script);
-    }
-  }, []);
-
-  return <div id={containerId} className="flex justify-center" />;
-}
-
 /* ---------- 320x50 mobile banner ---------- */
 
 export function AdBanner320x50() {
@@ -140,6 +117,43 @@ export function AdBanner320x50() {
     const script = document.createElement("script");
     script.src =
       "https://www.highperformanceformat.com/83e171a7d2c565bf53337a3f95c40907/invoke.js";
+    script.async = true;
+
+    const container = document.getElementById(containerId);
+    if (container) {
+      container.innerHTML = "";
+      container.appendChild(script);
+    }
+  }, []);
+
+  return (
+    <div
+      id={containerId}
+      className="flex items-center justify-center mx-auto"
+      style={{ minHeight: 50, minWidth: 320 }}
+    />
+  );
+}
+
+
+/* ---------- 300x160 mobile banner ---------- */
+
+export function AdBanner300x160() {
+  const containerId = "ad-300x160-container";
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    window.atOptions  = { 'key' : 'dd1ce2dad46eaa5e51d39dc9d7fce6d3', 
+      'format' : 'iframe', 
+      'height' : 300, 
+      'width' : 160, 
+      'params' : {} 
+    };
+
+    const script = document.createElement("script");
+    script.src =
+      "https://www.highperformanceformat.com/dd1ce2dad46eaa5e51d39dc9d7fce6d3/invoke.js";
     script.async = true;
 
     const container = document.getElementById(containerId);

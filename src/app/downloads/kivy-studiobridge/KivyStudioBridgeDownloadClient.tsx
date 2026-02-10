@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { AdBanner468x60, AdBanner320x50, AdBannerContainer } from "@/components/Ads";
+import { AdBanner468x60, AdBanner320x50, AdBannerContainer,AdBanner300x160 } from "@/components/Ads";
 
 const STEPS = [
   "Overview & Requirements",
@@ -75,7 +75,7 @@ export function KivyStudioBridgeDownloadClient() {
             </p>
 
             {/* Top in-content ad */}
-            <div className="rounded-xl border border-dashed border-gray-300 bg-gray-50 px-4 py-5 text-center text-xs text-gray-500 dark:border-gray-700 dark:bg-gray-900/40 dark:text-gray-400">
+            <div id="ad-468x60-container" className="rounded-xl border border-dashed border-gray-300 bg-gray-50 px-4 py-5 text-center text-xs text-gray-500 dark:border-gray-700 dark:bg-gray-900/40 dark:text-gray-400">
               <AdBanner468x60 />
             </div>
           </section>
@@ -132,7 +132,7 @@ export function KivyStudioBridgeDownloadClient() {
 
               {/* Mid-flow ad */}
               <div className="rounded-xl border border-dashed border-amber-300 bg-amber-50 px-4 py-5 text-center text-xs text-amber-800 dark:border-amber-700 dark:bg-amber-900/30 dark:text-amber-100">
-                <AdBanner468x60 />
+                <AdBanner300x160 />
               </div>
 
               <div className="flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
