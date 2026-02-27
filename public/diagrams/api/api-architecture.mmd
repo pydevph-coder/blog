@@ -1,0 +1,68 @@
+graph TB
+    subgraph "Frontend Layer"
+        PAGES[Next.js Pages]
+        COMPONENTS[React Components]
+    end
+
+    subgraph "API Layer"
+        AUTH_API["/api/auth/check"]
+        TRACK_API["/api/track"]
+        CONTACT_API["/api/contact"]
+        RSS_API["/rss.xml"]
+        LOGOUT_API["/admin/logout"]
+        VLOGS_API["/vlogs"]
+    end
+
+    subgraph "Business Logic Layer"
+        TRACKING[Tracking Service<br/>trackPageView<br/>trackUserAction]
+        EMAIL_SERVICE[Email Service<br/>Nodemailer]
+        AUTH_SERVICE[Auth Service<br/>Cookie Validation]
+    end
+
+    subgraph "Data Layer"
+        PRISMA[Prisma ORM]
+        POSTGRES[(PostgreSQL)]
+    end
+
+    subgraph "External Services"
+        GMAIL[Gmail SMTP]
+    end
+
+    subgraph "Storage"
+        COOKIES[HTTP Cookies]
+    end
+
+    PAGES --> AUTH_API
+    PAGES --> TRACK_API
+    PAGES --> CONTACT_API
+    PAGES --> RSS_API
+    PAGES --> LOGOUT_API
+    COMPONENTS --> TRACK_API
+
+    AUTH_API --> AUTH_SERVICE
+    AUTH_API --> PRISMA
+    TRACK_API --> TRACKING
+    CONTACT_API --> EMAIL_SERVICE
+    RSS_API --> PRISMA
+    LOGOUT_API --> AUTH_SERVICE
+
+    AUTH_SERVICE --> COOKIES
+    TRACKING --> PRISMA
+    EMAIL_SERVICE --> GMAIL
+    PRISMA --> POSTGRES
+
+    style AUTH_API fill:#e1f5ff
+    style TRACK_API fill:#fff4e1
+    style CONTACT_API fill:#ffe1f5
+    style RSS_API fill:#e1ffe1
+    style LOGOUT_API fill:#ffe1e1
+    style VLOGS_API fill:#f5e1ff
+    style POSTGRES fill:#d4edda
+    style GMAIL fill:#d1ecf1
+    style COOKIES fill:#f8d7da
+
+
+
+
+
+

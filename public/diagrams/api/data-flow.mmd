@@ -1,0 +1,60 @@
+flowchart TD
+    START([User Action]) --> DECIDE{Action Type}
+    
+    DECIDE -->|View Page| PAGE[Page View]
+    DECIDE -->|Click Button| ACTION[User Action]
+    DECIDE -->|Submit Form| CONTACT[Contact Form]
+    DECIDE -->|Read Feed| RSS[RSS Reader]
+    DECIDE -->|Check Auth| AUTH[Auth Check]
+    DECIDE -->|Logout| LOGOUT[Logout]
+    
+    PAGE --> TRACK_API[POST /api/track<br/>type: pageview]
+    ACTION --> TRACK_API2[POST /api/track<br/>type: action]
+    CONTACT --> CONTACT_API[POST /api/contact]
+    RSS --> RSS_API[GET /rss.xml]
+    AUTH --> AUTH_API[GET /api/auth/check]
+    LOGOUT --> LOGOUT_API[GET /admin/logout]
+    
+    TRACK_API --> EXTRACT[Extract Metadata<br/>IP, User-Agent, etc.]
+    EXTRACT --> PAGEVIEW_DB[(PageView Table)]
+    
+    TRACK_API2 --> EXTRACT2[Extract Metadata]
+    EXTRACT2 --> ACTION_DB[(UserAction Table)]
+    
+    CONTACT_API --> VALIDATE[Validate Fields]
+    VALIDATE -->|Invalid| ERROR1[400 Bad Request]
+    VALIDATE -->|Valid| EMAIL[Send Email via Gmail]
+    EMAIL -->|Success| SUCCESS1[200 OK]
+    EMAIL -->|Fail| ERROR2[500 Error]
+    
+    RSS_API --> QUERY[Query Published Posts<br/>Limit 50, Order by Date]
+    QUERY --> POSTS_DB[(Post Table)]
+    POSTS_DB --> GENERATE[Generate RSS XML]
+    GENERATE --> RSS_RESPONSE[200 OK<br/>RSS XML]
+    
+    AUTH_API --> CHECK_COOKIE[Check Admin Cookie]
+    CHECK_COOKIE -->|Valid| AUTH_SUCCESS[200 OK<br/>{isAuthenticated: true}]
+    CHECK_COOKIE -->|Invalid| AUTH_FAIL[200 OK<br/>{isAuthenticated: false}]
+    
+    LOGOUT_API --> CLEAR[Clear Admin Cookie]
+    CLEAR --> REDIRECT[302 Redirect to /]
+    
+    PAGEVIEW_DB --> ANALYTICS[Analytics Dashboard]
+    ACTION_DB --> ANALYTICS
+    
+    style TRACK_API fill:#fff4e1
+    style TRACK_API2 fill:#fff4e1
+    style CONTACT_API fill:#ffe1f5
+    style RSS_API fill:#e1ffe1
+    style AUTH_API fill:#e1f5ff
+    style LOGOUT_API fill:#ffe1e1
+    style PAGEVIEW_DB fill:#d4edda
+    style ACTION_DB fill:#d4edda
+    style POSTS_DB fill:#d4edda
+    style ANALYTICS fill:#d1ecf1
+
+
+
+
+
+

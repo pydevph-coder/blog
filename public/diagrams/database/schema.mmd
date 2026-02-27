@@ -1,0 +1,35 @@
+erDiagram
+  Post ||--o{ PostTag : has
+  Tag ||--o{ PostTag : maps
+  Category ||--o{ Post : groups
+
+  Post {
+    string id
+    string title
+    string slug
+    text contentMarkdown
+    text contentHtml
+    enum status
+    int? readingTimeMin
+    datetime? publishedAt
+  }
+
+  Tag {
+    string id
+    string name
+    string slug
+  }
+
+  Category {
+    string id
+    string name
+    string slug
+  }
+
+  PostTag {
+    string postId
+    string tagId
+  }
+
+
+

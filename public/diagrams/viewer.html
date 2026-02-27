@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Diagrams Viewer</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
+    aside { border-right: 1px solid #e5e7eb; padding: 16px; }
+    main { padding: 16px; }
+    ul { list-style: none; padding: 0; margin: 0; }
+    li { margin: 6px 0; }
+    a { color: #111827; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .item { display: block; padding: 6px 8px; border-radius: 6px; }
+    .item.active { background: #f3f4f6; font-weight: 600; }
+    .toolbar { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; }
+    .viewer { border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; background: #fff; overflow:auto; }
+    .hidden { display: none; }
+    textarea { width: 100%; height: 120px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+  </style>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: false, theme: 'default' });
+
+    const state = { manifest: null, current: null };
+
+    async function fetchManifest() {
+      const res = await fetch('./index.json');
+      state.manifest = await res.json();
+    }
+
+    function buildSidebar() {
+      const nav = document.getElementById('nav');
+      nav.innerHTML = '';
+      for (const group of state.manifest.groups) {
+        const h = document.createElement('h3');
+        h.textContent = group.title;
+        nav.appendChild(h);
+        const ul = document.createElement('ul');
+        for (const item of group.items) {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = `#${encodeURIComponent(item.file)}`;
+          a.textContent = item.title;
+          a.className = 'item';
+          li.appendChild(a);
+          ul.appendChild(li);
+        }
+        nav.appendChild(ul);
+      }
+    }
+
+    async function render(hash) {
+      const file = decodeURIComponent((hash || '').replace(/^#/, ''));
+      if (!file) return;
+      state.current = file;
+      const ext = file.split('.').pop();
+      const container = document.getElementById('viewer');
+      const code = document.getElementById('code');
+      document.querySelectorAll('.item').forEach(a => a.classList.toggle('active', a.getAttribute('href') === `#${file}`));
+      if (ext === 'mmd' || ext === 'mermaid') {
+        const text = await (await fetch(`./${file}`)).text();
+        code.value = text;
+        document.getElementById('codeWrap').classList.remove('hidden');
+        const { svg } = await mermaid.render('mmd-' + Math.random().toString(36).slice(2), text);
+        container.innerHTML = svg;
+      } else if (ext === 'svg') {
+        const svgText = await (await fetch(`./${file}`)).text();
+        document.getElementById('codeWrap').classList.add('hidden');
+        container.innerHTML = svgText;
+      } else {
+        container.textContent = 'Unsupported file type: ' + ext;
+      }
+    }
+
+    window.addEventListener('hashchange', () => render(location.hash));
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await fetchManifest();
+      buildSidebar();
+      render(location.hash || '#' + encodeURIComponent(state.manifest.groups[0].items[0].file));
+    });
+
+    document.getElementById('rerender').addEventListener('click', () => {
+      if (state.current && (state.current.endsWith('.mmd') || state.current.endsWith('.mermaid'))) {
+        const text = (document.getElementById('code')).value;
+        mermaid.render('mmd-' + Math.random().toString(36).slice(2), text).then(({ svg }) => {
+          document.getElementById('viewer').innerHTML = svg;
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+  <aside>
+    <h2>Diagrams</h2>
+    <div id="nav"></div>
+  </aside>
+  <main>
+    <div class="toolbar">
+      <button id="rerender" title="Re-render Mermaid">Re-render</button>
+      <span id="filename"></span>
+    </div>
+    <div id="codeWrap" class="hidden">
+      <textarea id="code" spellcheck="false"></textarea>
+    </div>
+    <div id="viewer" class="viewer"></div>
+  </main>
+</body>
+</html>
+
+
+
+

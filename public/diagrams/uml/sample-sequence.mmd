@@ -1,0 +1,13 @@
+sequenceDiagram
+  autonumber
+  actor User
+  participant Web as Blog Web
+  participant DB as PostgreSQL
+
+  User->>Web: Open /post/[slug]
+  Web->>DB: SELECT * FROM Post WHERE slug = ?
+  DB-->>Web: Post row
+  Web-->>User: HTML page
+
+
+

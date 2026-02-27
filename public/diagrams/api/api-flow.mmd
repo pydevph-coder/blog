@@ -1,0 +1,50 @@
+sequenceDiagram
+    participant Client
+    participant API as API Endpoint
+    participant DB as Database
+    participant Email as Email Service
+    participant Cookie as Cookie Store
+
+    Note over Client,Cookie: Authentication Flow
+    Client->>API: GET /api/auth/check
+    API->>Cookie: Check admin cookie
+    Cookie-->>API: Cookie value
+    API->>DB: Query session (optional)
+    API-->>Client: { isAuthenticated: true/false }
+
+    Note over Client,Email: Contact Form Flow
+    Client->>API: POST /api/contact<br/>{name, email, message}
+    API->>API: Validate required fields
+    alt Missing fields
+        API-->>Client: 400 Bad Request
+    else Valid request
+        API->>Email: Send email via Gmail SMTP
+        Email-->>API: Email sent
+        API-->>Client: { ok: true }
+    end
+
+    Note over Client,DB: Tracking Flow
+    Client->>API: POST /api/track<br/>{type: "pageview", path}
+    API->>API: Extract request metadata<br/>(IP, User-Agent, etc.)
+    API->>DB: Create PageView record
+    DB-->>API: Success
+    API-->>Client: { success: true }
+
+    Note over Client,DB: RSS Feed Flow
+    Client->>API: GET /rss.xml
+    API->>DB: Query published posts<br/>(limit 50, ordered by date)
+    DB-->>API: Posts data
+    API->>API: Generate RSS XML
+    API-->>Client: RSS XML (200 OK)
+
+    Note over Client,Cookie: Logout Flow
+    Client->>API: GET /admin/logout
+    API->>Cookie: Clear admin cookie
+    Cookie-->>API: Cookie cleared
+    API-->>Client: 302 Redirect to /
+
+
+
+
+
+

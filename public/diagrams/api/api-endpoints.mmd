@@ -1,0 +1,50 @@
+graph TB
+    subgraph "Client Applications"
+        WEB[Web Browser]
+        RSS[RSS Reader]
+        MOBILE[Mobile App]
+    end
+
+    subgraph "API Endpoints"
+        AUTH["/api/auth/check<br/>GET<br/>Check Authentication"]
+        TRACK["/api/track<br/>POST<br/>Track Analytics"]
+        CONTACT["/api/contact<br/>POST<br/>Contact Form"]
+        RSS_FEED["/rss.xml<br/>GET<br/>RSS Feed"]
+        VLOGS["/vlogs<br/>GET<br/>Redirect"]
+        LOGOUT["/admin/logout<br/>GET<br/>Admin Logout"]
+    end
+
+    subgraph "Services"
+        DB[(PostgreSQL<br/>Database)]
+        EMAIL[Gmail SMTP]
+        COOKIE[Cookie Store]
+    end
+
+    WEB --> AUTH
+    WEB --> TRACK
+    WEB --> CONTACT
+    WEB --> LOGOUT
+    RSS --> RSS_FEED
+    WEB --> VLOGS
+    MOBILE --> AUTH
+    MOBILE --> TRACK
+
+    AUTH --> COOKIE
+    AUTH --> DB
+    TRACK --> DB
+    CONTACT --> EMAIL
+    CONTACT --> DB
+    RSS_FEED --> DB
+    LOGOUT --> COOKIE
+
+    style AUTH fill:#e1f5ff
+    style TRACK fill:#fff4e1
+    style CONTACT fill:#ffe1f5
+    style RSS_FEED fill:#e1ffe1
+    style VLOGS fill:#f5e1ff
+    style LOGOUT fill:#ffe1e1
+    style DB fill:#d4edda
+    style EMAIL fill:#d1ecf1
+    style COOKIE fill:#f8d7da
+
+

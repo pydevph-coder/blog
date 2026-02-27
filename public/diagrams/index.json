@@ -1,0 +1,40 @@
+{
+  "groups": [
+    {
+      "name": "uml",
+      "title": "UML Diagrams",
+      "items": [
+        { "file": "uml/sample-sequence.mmd", "title": "Sample Sequence" },
+        { "file": "uml/sample-class.svg", "title": "Sample Class (SVG)" }
+      ]
+    },
+    {
+      "name": "database",
+      "title": "Database Workflows",
+      "items": [
+        { "file": "database/schema.mmd", "title": "DB Schema" }
+      ]
+    },
+    {
+      "name": "dataflow",
+      "title": "Dataflow Diagrams",
+      "items": [
+        { "file": "dataflow/pipeline.mmd", "title": "ETL Pipeline" }
+      ]
+    },
+    {
+      "name": "api",
+      "title": "API Documentation",
+      "items": [
+        { "file": "api/api-endpoints.mmd", "title": "API Endpoints Overview" },
+        { "file": "api/api-flow.mmd", "title": "API Request Flow" },
+        { "file": "api/api-architecture.mmd", "title": "API Architecture" },
+        { "file": "api/api-request-response.mmd", "title": "Request/Response Flow" },
+        { "file": "api/data-flow.mmd", "title": "Data Flow Diagram" }
+      ]
+    }
+  ]
+}
+
+
+

@@ -1,0 +1,53 @@
+graph LR
+    subgraph "Authentication API"
+        A1[GET /api/auth/check] --> A2{Has admin cookie?}
+        A2 -->|Yes| A3["200 OK<br/>{isAuthenticated: true}"]
+        A2 -->|No| A4["200 OK<br/>{isAuthenticated: false}"]
+    end
+
+    subgraph "Tracking API"
+        T1[POST /api/track] --> T2{Type?}
+        T2 -->|pageview| T3[Store PageView]
+        T2 -->|action| T4[Store UserAction]
+        T3 --> T5["200 OK<br/>{success: true}"]
+        T4 --> T5
+        T1 -->|Error| T6["500 Error<br/>{success: false}"]
+    end
+
+    subgraph "Contact API"
+        C1[POST /api/contact] --> C2{Valid fields?}
+        C2 -->|No| C3["400 Bad Request<br/>{error: 'Missing required fields'}"]
+        C2 -->|Yes| C4{Email configured?}
+        C4 -->|No| C5["500 Error<br/>{error: 'Email not configured'}"]
+        C4 -->|Yes| C6[Send Email]
+        C6 -->|Success| C7["200 OK<br/>{ok: true}"]
+        C6 -->|Fail| C8["500 Error<br/>{error: 'Failed to send'}"]
+    end
+
+    subgraph "RSS API"
+        R1[GET /rss.xml] --> R2[Query Published Posts]
+        R2 --> R3[Generate RSS XML]
+        R3 --> R4["200 OK<br/>application/rss+xml"]
+    end
+
+    subgraph "Logout API"
+        L1[GET /admin/logout] --> L2[Clear Cookie]
+        L2 --> L3["302 Redirect<br/>Location: /"]
+    end
+
+    style A3 fill:#d4edda
+    style A4 fill:#f8d7da
+    style T5 fill:#d4edda
+    style T6 fill:#f8d7da
+    style C7 fill:#d4edda
+    style C3 fill:#fff3cd
+    style C5 fill:#f8d7da
+    style C8 fill:#f8d7da
+    style R4 fill:#d4edda
+    style L3 fill:#d1ecf1
+
+
+
+
+
+
