@@ -16,6 +16,7 @@ export default async function AssignmentsPage() {
     select: { 
       id: true, 
       title: true, 
+      cat : true,
       slug: true, 
       excerpt: true, 
       publishedAt: true,
