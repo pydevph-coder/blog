@@ -15,6 +15,8 @@ export function KivyStudioBridgeDownloadClient() {
   const [step, setStep] = useState(0);
   const [canGoNext, setCanGoNext] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(15);
+  const [adRefresh, setAdRefresh] = useState(0);
+
 
   // 15-second delay before user can click Next on each step
   useEffect(() => {
@@ -35,8 +37,16 @@ export function KivyStudioBridgeDownloadClient() {
     return () => clearInterval(interval);
   }, [step]);
 
-  const goNext = () => setStep((s) => Math.min(s + 1, STEPS.length - 1));
-  const goPrev = () => setStep((s) => Math.max(s - 1, 0));
+  const goNext = () => {
+    setStep((s) => Math.min(s + 1, STEPS.length - 1));
+    setAdRefresh((r) => r + 1); // force ad reload
+  };
+  
+  const goPrev = () => {
+    setStep((s) => Math.max(s - 1, 0));
+    setAdRefresh((r) => r + 1); // optional reload on back
+  };
+  
 
   return (
     <main className="w-full px-4 py-12">
@@ -44,7 +54,7 @@ export function KivyStudioBridgeDownloadClient() {
         {/* Left ad rail */}
         <aside className="hidden lg:block w-64 flex-shrink-0">
           <div className="sticky top-24 space-y-4">
-          <AdBannerContainer/>
+          <AdBannerContainer refreshKey={0}/>
           </div>
         </aside>
 
@@ -67,6 +77,7 @@ export function KivyStudioBridgeDownloadClient() {
             {/* Top in-content ad */}
             <div id="ad-468x60-container" className="rounded-xl border border-dashed border-gray-300 bg-gray-50 px-4 py-5 text-center text-xs text-gray-500 dark:border-gray-700 dark:bg-gray-900/40 dark:text-gray-400">
             <SafeAdBanner
+                key={`top-${adRefresh}`}
                 adKey="89fd2317f6e2b437cdde510b2d21dd6c"
                 width={468}
                 height={60}
@@ -127,6 +138,7 @@ export function KivyStudioBridgeDownloadClient() {
               {/* Mid-flow ad */}
               <div id="ad-300x160-container" className="rounded-xl border border-dashed border-amber-300 bg-amber-50 px-4 py-5 text-center text-xs text-amber-800 dark:border-amber-700 dark:bg-amber-900/30 dark:text-amber-100">
               <SafeAdBanner
+                  key={`mid-${adRefresh}`}
                   adKey="83e171a7d2c565bf53337a3f95c40907"
                   width={320}
                   height={50}
@@ -188,6 +200,7 @@ export function KivyStudioBridgeDownloadClient() {
             <div className="space-y-4">
               <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 text-center text-xs text-gray-600 dark:border-gray-700 dark:bg-gray-900/60 dark:text-gray-300">
               <SafeAdBanner
+                  key={`mid-${adRefresh}`}
                   adKey="83e171a7d2c565bf53337a3f95c40907"
                   width={320}
                   height={50}
@@ -279,7 +292,11 @@ function StepBetaNotice() {
 
       <div className="space-y-3">
         <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 text-xs text-gray-600 dark:border-gray-700 dark:bg-gray-900/60 dark:text-gray-300">
-          <AdBanner468x60 />
+        <SafeAdBanner
+          adKey="dd1ce2dad46eaa5e51d39dc9d7fce6d3"
+          width={160}
+          height={300}
+        />
         </div>
         <div className="rounded-xl border border-indigo-200 bg-indigo-50 p-4 text-xs text-indigo-900 dark:border-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-100">
           Check this page again periodically to see when a new KivyStudioBridge beta or stable build
@@ -309,7 +326,7 @@ function StepDownloadLinks() {
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-indigo-700"
           >
-            Go to Releases (Windows)
+            Download App
           </Link>
           <p className="text-[11px] text-indigo-900/80 dark:text-indigo-100/80">
             This is a <strong>beta build</strong>. For the best experience, plan to{" "}

@@ -76,24 +76,32 @@ export function AdBanner468x60() {
 
 /* ---------- Responsive container banner ---------- */
 
-export function AdBannerContainer() {
+
+interface Props {
+  refreshKey: number;
+}
+
+export function AdBannerContainer({ refreshKey }: Props) {
   const containerId = "container-68d358cd97189f3d2e4f773c995f3ef1";
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    // Clear old ad
+    container.innerHTML = "";
+
     const script = document.createElement("script");
     script.src =
       "https://pl28682386.effectivegatecpm.com/68d358cd97189f3d2e4f773c995f3ef1/invoke.js";
+
     script.async = true;
     script.setAttribute("data-cfasync", "false");
 
-    const container = document.getElementById(containerId);
-    if (container) {
-      container.innerHTML = "";
-      container.appendChild(script);
-    }
-  }, []);
+    container.appendChild(script);
+  }, [refreshKey]); // 🔥 now it refreshes when key changes
 
   return <div id={containerId} className="flex justify-center" />;
 }
