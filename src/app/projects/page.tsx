@@ -71,7 +71,7 @@ export default async function ProjectsPage() {
         {/* Left Sidebar for Ads */}
         <aside className="hidden lg:block w-64 flex-shrink-0">
           <div className=" top-24 space-y-4">
-              <AdBannerContainer/>
+              <AdBannerContainer refreshKey={0}/>
            
          </div>
         </aside>

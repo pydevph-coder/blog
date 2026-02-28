@@ -18,7 +18,7 @@ export default function KivyStudioBridgeProjectPage() {
         {/* Left sidebar – ad rail */}
         <aside className="hidden lg:block w-64 flex-shrink-0">
         <div className="sticky top-24 space-y-4">
-              <AdBannerContainer/>
+              <AdBannerContainer refreshKey={0}/>
            
            
          </div>

@@ -83,7 +83,7 @@ export function MobileAdsPageClient() {
           <section className="rounded-2xl bg-slate-900/80 border border-slate-800 shadow-xl px-3 py-4 space-y-4">
             {/* Top responsive container ad */}
             <div className="rounded-xl bg-slate-950/70 border border-slate-800 px-2 py-3 flex justify-center">
-              <AdBannerContainer />
+              <AdBannerContainer refreshKey={0}/>
             </div>
 
             {/* Stacked mobile banners */}

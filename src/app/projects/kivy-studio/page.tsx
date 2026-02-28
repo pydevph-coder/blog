@@ -20,7 +20,7 @@ export default function KivyStudioProjectPage() {
         {/* Left sidebar – long, scrollable ad rail */}
         <aside className="hidden lg:block w-64 flex-shrink-0">
         <div className=" top-24 space-y-4">
-              <AdBannerContainer/>
+              <AdBannerContainer refreshKey={0}/>
            
          </div>
           {/* <div className="sticky top-24 space-y-4">
