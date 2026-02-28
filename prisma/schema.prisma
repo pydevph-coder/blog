@@ -47,6 +47,7 @@ model Post {
   image           String?    @db.VarChar(80)
   category        Category?  @relation(fields: [categoryId], references: [id])
   tags            PostTag[]
+  cat             String     @default("post")
 }
 
 model PostTag {

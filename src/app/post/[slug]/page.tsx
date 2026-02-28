@@ -47,7 +47,8 @@ export default async function PostPage({ params }: PageProps) {
   
   const isProjectOrAssignment = post.category && (post.category.slug === "projects" || post.category.slug === "assignments");
   const site = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-  const canonical = `${site}/post/${post.slug}`;
+
+  const canonical = `${site}/${post.cat}/${post.slug}`;
   const ogImage = post.ogImageUrl || undefined;
   const jsonLd = {
     "@context": "https://schema.org",

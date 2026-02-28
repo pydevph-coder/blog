@@ -7,6 +7,7 @@ type Post = {
   id: string;
   slug: string;
   title: string;
+  cat : string;
   excerpt: string | null;
   publishedAt: Date | string | null;
   readingTimeMin: number | null;
@@ -204,7 +205,7 @@ export default function SearchAndFilters({ posts, allTags, type }: SearchAndFilt
                   ? "hover:border-blue-400 dark:hover:border-blue-600"
                   : "hover:border-green-400 dark:hover:border-green-600"
               }`}
-              onClick={() => router.push(`/post/${post.slug}`)}
+              onClick={() => router.push(`/${post.cat}/${post.slug}`)}
             >
               <div className="space-y-4">
                 <div className="flex items-start justify-between gap-4">

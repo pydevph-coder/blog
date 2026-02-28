@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { buildMetadata } from "@/lib/seo";
 import { AdBanner468x60, AdBanner320x50, AdBannerContainer } from "@/components/Ads";
-
+import {SafeAdBanner} from "@/components/SafeBanner";
 export const metadata = buildMetadata({
   title: "KivyStudioBridge – Windows Companion for Kivy Studio Android",
   description:
@@ -17,7 +17,12 @@ export default function KivyStudioBridgeProjectPage() {
       <div className="flex gap-6 max-w-7xl mx-auto">
         {/* Left sidebar – ad rail */}
         <aside className="hidden lg:block w-64 flex-shrink-0">
-          <div className="sticky top-24 space-y-4">
+        <div className="sticky top-24 space-y-4">
+              <AdBannerContainer/>
+           
+           
+         </div>
+          {/* <div className="sticky top-24 space-y-4">
             <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[250px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
               <AdBanner468x60 />
             </div>
@@ -30,7 +35,7 @@ export default function KivyStudioBridgeProjectPage() {
             <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[70px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
               <AdBanner320x50 />
             </div>
-          </div>
+          </div> */}
         </aside>
 
         {/* Main content */}
@@ -147,7 +152,11 @@ export default function KivyStudioBridgeProjectPage() {
 
           {/* Mid-page ad */}
           <section className="rounded-xl border border-dashed border-gray-300 bg-gray-50 px-6 py-8 text-center text-sm text-gray-500 dark:border-gray-700 dark:bg-gray-900/40 dark:text-gray-400">
-            <AdBanner468x60 />
+          <SafeAdBanner
+            adKey="89fd2317f6e2b437cdde510b2d21dd6c"
+            width={468}
+            height={60}
+          />
           </section>
 
           {/* What it does */}
@@ -259,7 +268,7 @@ export default function KivyStudioBridgeProjectPage() {
                 </div>
 
                 <div className="rounded-xl border border-dashed border-amber-300 bg-amber-50/70 p-4 text-center text-xs text-amber-700 dark:border-amber-700 dark:bg-amber-900/30 dark:text-amber-200">
-                  <AdBanner468x60 />
+                  <AdBanner320x50/>
                 </div>
               </div>
             </div>

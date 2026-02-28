@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AdBanner468x60, AdBanner320x50, AdBannerContainer } from "@/components/Ads";
 import {AdBanner300x160} from "@/components/Banner1"
-
+import { SafeAdBanner } from "@/components/SafeBanner";
 const STEPS = [
   "Overview & Requirements",
   "Beta Notice & Ads",
@@ -66,7 +66,11 @@ export function KivyStudioBridgeDownloadClient() {
 
             {/* Top in-content ad */}
             <div id="ad-468x60-container" className="rounded-xl border border-dashed border-gray-300 bg-gray-50 px-4 py-5 text-center text-xs text-gray-500 dark:border-gray-700 dark:bg-gray-900/40 dark:text-gray-400">
-              <AdBanner468x60 />
+            <SafeAdBanner
+                adKey="89fd2317f6e2b437cdde510b2d21dd6c"
+                width={468}
+                height={60}
+              />
             </div>
           </section>
 
@@ -122,7 +126,11 @@ export function KivyStudioBridgeDownloadClient() {
 
               {/* Mid-flow ad */}
               <div id="ad-300x160-container" className="rounded-xl border border-dashed border-amber-300 bg-amber-50 px-4 py-5 text-center text-xs text-amber-800 dark:border-amber-700 dark:bg-amber-900/30 dark:text-amber-100">
-                <AdBanner300x160 />
+              <SafeAdBanner
+                  adKey="83e171a7d2c565bf53337a3f95c40907"
+                  width={320}
+                  height={50}
+                />
               </div>
 
               <div className="flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -179,7 +187,12 @@ export function KivyStudioBridgeDownloadClient() {
 
             <div className="space-y-4">
               <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 text-center text-xs text-gray-600 dark:border-gray-700 dark:bg-gray-900/60 dark:text-gray-300">
-                <AdBanner468x60 />
+              <SafeAdBanner
+                  adKey="83e171a7d2c565bf53337a3f95c40907"
+                  width={320}
+                  height={50}
+                />
+            
               </div>
               <div className="rounded-xl border border-blue-200 bg-blue-50 p-4 text-xs text-blue-900 dark:border-blue-700 dark:bg-blue-900/30 dark:text-blue-100">
                 Want to see the full ecosystem?{" "}
@@ -288,11 +301,10 @@ function StepDownloadLinks() {
         <div className="space-y-3 rounded-xl border border-indigo-300 bg-white/90 p-4 text-sm text-indigo-900 shadow-xs dark:border-indigo-600 dark:bg-indigo-900/70 dark:text-indigo-50">
           <h3 className="text-sm font-semibold">Download Windows Build (Beta)</h3>
           <p className="text-xs">
-            Get the latest <strong>Windows executable/installer</strong> for KivyStudioBridge. Run
-            the installer and follow on-screen instructions to complete setup.
+            Get the latest <strong>Windows executable/installer</strong> for KivyStudioBridge.
           </p>
           <Link
-            href="https://github.com/yourusername/kivystudiobridge/releases"
+            href="https://firebasestorage.googleapis.com/v0/b/kivystudio.firebasestorage.app/o/KivyStudioBridge.exe?alt=media&token=be31c5b1-9c10-4aca-a574-d2de1e5a5273"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-indigo-700"

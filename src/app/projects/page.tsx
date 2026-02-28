@@ -17,6 +17,7 @@ export default async function ProjectsPage() {
       id: true, 
       title: true, 
       slug: true, 
+      cat : true,
       excerpt: true, 
       publishedAt: true,
       readingTimeMin: true,
@@ -70,18 +71,8 @@ export default async function ProjectsPage() {
         {/* Left Sidebar for Ads */}
         <aside className="hidden lg:block w-64 flex-shrink-0">
           <div className=" top-24 space-y-4">
-            {/* <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[250px] flex items-center justify-center border border-gray-200 dark:border-gray-700"> */}
               <AdBannerContainer/>
-            {/* </div> */}
-            {/* <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[70px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
-              <AdBanner320x50 />
-            </div>
-            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[70px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
-              <AdBanner320x50 />
-            </div>
-            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 min-h-[70px] flex items-center justify-center border border-gray-200 dark:border-gray-700">
-              <AdBanner320x50 />
-            </div> */}
+           
          </div>
         </aside>
 
