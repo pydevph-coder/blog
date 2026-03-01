@@ -28,6 +28,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
       <GlobalPopunderScripts />
+        <meta name="monetag" content="982761930711917dd55d2584d1c227c2">
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
