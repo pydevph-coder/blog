@@ -19,28 +19,26 @@ export function DownloadButton() {
     "idle" | "preparing" | "redirecting" | "error"
   >("idle");
 
-  const startDownload = async () => {
-    try {
-      setStatus("preparing");
+  const startDownload = () => {
+  try {
+    setStatus("preparing");
 
-      const res = await fetch("/api/download/android");
-      const data = await res.json();
+    // open in a new tab (works around CORS)
+    const firebaseUrl =
+      "https://firebasestorage.googleapis.com/v0/b/kivystudio.firebasestorage.app/o/kivystudio.apk?alt=media&token=0aba0469-f254-434e-8280-1060c72d623d";
 
-      if (!data?.url) {
-        throw new Error("No URL returned");
-      }
+    setStatus("redirecting");
 
-      setStatus("redirecting");
+    // small delay = nicer UX
+    setTimeout(() => {
+      window.open(firebaseUrl, "_blank"); // ✅ open in new tab
+    }, 800);
+  } catch (err) {
+    console.error(err);
+    setStatus("error");
+  }
+};
 
-      // small delay = nicer UX
-      setTimeout(() => {
-        window.location.href = data.url;
-      }, 800);
-    } catch (err) {
-      console.error(err);
-      setStatus("error");
-    }
-  };
 
   return (
     <div className="space-y-3">
