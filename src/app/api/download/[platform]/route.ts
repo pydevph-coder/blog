@@ -1,52 +1,21 @@
-import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
   { params }: { params: Promise<{ platform: string }> }
 ) {
-  console.log("==== DOWNLOAD API CALLED ====");
-
-  // ✅ unwrap the promise
   const { platform } = await params;
 
-  console.log("platform =", platform);
+  let url = "";
 
-  let path = "";
-
-  if (platform === "android") path = "honest.jpg";
-  else if (platform === "windows") path = "windows/kivystudio.exe";
-  else {
-    console.log("❌ invalid platform");
+  if (platform === "android") {
+    url = "https://firebasestorage.googleapis.com/v0/b/kivystudio.firebasestorage.app/o/kivystudio.apk?alt=media&token=0aba0469-f254-434e-8280-1060c72d623d";
+  } else if (platform === "windows") {
+    url = "https://firebasestorage.googleapis.com/v0/b/kivystudio.firebasestorage.app/o/KivyStudioBridge.exe?alt=media&token=be31c5b1-9c10-4aca-a574-d2de1e5a5273"; // replace later
+  } else {
     return new Response("Not found", { status: 404 });
   }
 
-  console.log("file path =", path);
-
-  const supabase = createClient(
-    process.env.SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
-
-  console.log("creating signed url...");
-  const { data: list } = await supabase.storage
-  .from("kivystudio")
-  .list();
-
-console.log("FILES =", list);
-
-
-  const { data, error } = await supabase.storage
-    .from("kivystudio")
-    .createSignedUrl(path, 60 * 5);
-
-
-  if (error) {
-    console.log("❌ signed url error =", error.message);
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-
-  console.log("✅ signed url created");
-
-  return NextResponse.json({ url: data?.signedUrl });
+  // 🔥 Redirect to download
+  return NextResponse.redirect(url);
 }
